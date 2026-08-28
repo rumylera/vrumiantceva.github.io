@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-bg: #0d2720;
+  --color-fg: #f0ede6;
+  --color-cream-dim: #b8b0a0;
+  --color-copper: #c46b3a;
+  --color-copper-light: #d9834f;
+  --color-teal: #1a4a3c;
+  --color-surface: #132820;
+  --color-border: rgba(240, 237, 230, 0.1);
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: #0d2720;
+  color: #f0ede6;
+}
+
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background-color: #c46b3a;
+  color: #f0ede6;
+}

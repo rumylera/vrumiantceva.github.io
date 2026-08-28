@@ -1,0 +1,17 @@
+{
+  "title": "Portfolio V. Rumiantceva",
+  "description": "Showcase creative work and projects in a professional portfolio to attract clients and employers with a visually engaging online presence.",
+  "robots": {
+    "index": false
+  },
+  "icons": {
+    "icon": "/.figma/make/favicon.png"
+  },
+  "openGraph": {
+    "image": "/.figma/make/social-image.png"
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
