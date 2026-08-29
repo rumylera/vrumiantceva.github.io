@@ -319,7 +319,6 @@ const prevSlide = (id: string, total: number) => {
                  backgroundColor: SURFACE,
                  position: "relative",
                  maxHeight: "90vh",
-                 aspectRatio: "16/10",
                }}>
   {p.images && p.images.length > 0 && (
     <>
