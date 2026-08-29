@@ -20,7 +20,7 @@ const projects = [
     capacity: "30 guests",
     description:
       "Adaptive Reuse of a medieval fortress in Tuscany.",
-    images: ["/Ripafratta.png", "/Ripafratta2.jpg", "/Ripafratta3.jpg"],
+    images: ["/ripafratta1.jpg", "/ripafratta2.jpg", "/ripafratta3.jpg", "/ripafratta4.jpg],
   },
   {
     id: "02",
