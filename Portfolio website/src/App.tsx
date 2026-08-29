@@ -320,7 +320,7 @@ const prevSlide = (id: string, total: number) => {
       <img
         src={p.images[slideIndex[p.id] ?? 0]}
         alt={p.title}
-        style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center top", opacity: 0.88, transition: "opacity 0.4s" }}
+        style={{ width: "90%", height: "90%", objectFit: "contain", objectPosition: "center top", opacity: 0.88, transition: "opacity 0.4s" }}
       />
 
       {p.images.length > 1 && (
