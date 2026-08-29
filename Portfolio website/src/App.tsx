@@ -312,14 +312,17 @@ const prevSlide = (id: string, total: number) => {
               </div>
             </button>
 
-            {activeProject === p.id && (
-              <div style={{ paddingBottom: "2.5rem", borderBottom: `1px solid rgba(240,237,230,0.08)`, display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }} className="md:grid-cols-2">
+{activeProject === p.id && (
+              <div style={{ paddingBottom: "2.5rem", borderBottom: `1px solid rgba(240,237,230,0.08)`, display: "flex", flexDirection: "column", gap: "2rem" }}>
                <div style={{
                  overflow: "hidden",
                  backgroundColor: SURFACE,
                  position: "relative",
                  aspectRatio: "16/10",
-                 maxHeight: "38vh",
+                 maxHeight: "60vh",
+                 maxWidth: "56rem",
+                 width: "100%",
+                 margin: "0 auto",
                  display: "flex",
                  alignItems: "center",
                  justifyContent: "center",
@@ -332,7 +335,7 @@ const prevSlide = (id: string, total: number) => {
         style={{
           width: "100%",
           height: "100%",
-          maxHeight: "38vh",
+          maxHeight: "60vh",
           objectFit: "contain",
           objectPosition: "center",
           opacity: 0.88,
@@ -387,6 +390,20 @@ const prevSlide = (id: string, total: number) => {
     </>
   )}
 </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", maxWidth: "56rem", margin: "0 auto", width: "100%" }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
+                    {[["Location", p.location], ["Type", p.type], ["Year", p.year], ["Capacity", p.capacity]].map(([label, val]) => (
+                      <div key={`${p.id}-${label}`}>
+                        <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "0.2rem" }}>{label}</p>
+                        <p style={{ fontSize: "0.85rem", color: FG, fontWeight: 400 }}>{val}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
+                  <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", cursor: "pointer" }} onClick={() => setActiveProject(null)}>↑ Collapse</span>
+                </div>
+              </div>
+            )}
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", paddingTop: "0.5rem" }}>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
                     {[["Location", p.location], ["Type", p.type], ["Year", p.year], ["Capacity", p.capacity]].map(([label, val]) => (
