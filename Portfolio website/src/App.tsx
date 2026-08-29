@@ -124,8 +124,8 @@ const digital = [
 ];
 
 const skills = [
-  "AutoCAD", "Revit", "Rhino", "SketchUp",
-  "InDesign", "Procreate", "Figma",
+  "AutoCAD", "Revit", "SketchUp",
+  "Procreate", "Figma",
   "Adobe InDesign", "C++", "Pyhton",
   "HTML and CSS", "MATLAB", "MySQL",
 ];
@@ -236,7 +236,7 @@ const prevSlide = (id: string, total: number) => {
         {/* Text */}
         <div style={{ position: "relative", zIndex: 10, maxWidth: "56rem" }}>
           <p style={{ fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.22em", color: COPPER, textTransform: "uppercase", marginBottom: "1.5rem" }}>
-            Architecture & Illustration — Portfolio 2026
+           Portfolio 2026
           </p>
           <h1
             style={{
@@ -250,7 +250,7 @@ const prevSlide = (id: string, total: number) => {
             <em>Rumiantceva</em>
           </h1>
           <p style={{ fontSize: "1rem", lineHeight: 1.8, maxWidth: "26rem", color: DIM, fontWeight: 300, marginBottom: "2.5rem" }}>
-            Architecture BSc at Politechnika Gdańska (2026). Erasmus+ at Universiteit Hasselt (a.y. 23/24). Designing buildings that negotiate between people and landscape — drawing the rest.
+            Architecture BSc at Politechnika Gdańska (2026). Erasmus+ at Universiteit Hasselt (a.y. 23/24). 
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <button
@@ -494,21 +494,11 @@ const prevSlide = (id: string, total: number) => {
       {/* ── ABOUT ────────────────────────────────────────────── */}
       <section id="about" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "4rem" }}>
-          <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, letterSpacing: "0.2em" }}>03</span>
+          <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, letterSpacing: "0.2em" }}></span>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>About</h2>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "4rem" }} className="md:grid-cols-2">
-          <div>
-            <img
-              src=""
-              alt=""
-              style={{ width: "100%", objectFit: "cover", opacity: 0.8, backgroundColor: SURFACE }}
-            />
-            <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.4)", letterSpacing: "0.1em", marginTop: "0.75rem" }}>
-              Cape Town, South Africa — ViaVia FliekPiek site visit, 2024
-            </p>
-          </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             <p style={{ fontFamily: SERIF, fontSize: "clamp(1.4rem, 3vw, 1.9rem)", lineHeight: 1.35, fontWeight: 400 }}>
@@ -581,7 +571,7 @@ const prevSlide = (id: string, total: number) => {
       {/* ── CONTACT ──────────────────────────────────────────── */}
       <section id="contact" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)", borderTop: `1px solid ${BORDER}` }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem", marginBottom: "4rem" }}>
-          <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, letterSpacing: "0.2em" }}>04</span>
+          <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, letterSpacing: "0.2em" }}></span>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Contact</h2>
         </div>
 
@@ -637,7 +627,7 @@ const prevSlide = (id: string, total: number) => {
         className="md:flex-row md:justify-between md:items-center"
       >
         <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", letterSpacing: "0.12em" }}>
-          © 2026 Valeriia Rumiantceva — Architecture & Illustration
+          © 2026 Valeriia Rumiantceva — Portfolio 
         </span>
         <button
           onClick={() => scrollTo("hero")}
