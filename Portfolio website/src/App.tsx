@@ -275,7 +275,7 @@ const prevSlide = (id: string, total: number) => {
         </div>
       </section>
 
-      {/* ── PROJECTS ─────────────────────────────────────────── */}
+    {/* ── PROJECTS ─────────────────────────────────────────── */}
       <section id="projects" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
@@ -313,14 +313,20 @@ const prevSlide = (id: string, total: number) => {
             </button>
 
             {activeProject === p.id && (
-              <div style={{ paddingBottom: "2.5rem", borderBottom: `1px solid rgba(240,237,230,0.08)`, display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }} className="md:grid-cols-2">
-               <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative" }}>
+              <div style={{ paddingBottom: "2.5rem", borderBottom: `1px solid rgba(240,237,230,0.08)`, display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem" }} className="md:grid-cols-2">
+               <div style={{
+                 overflow: "hidden",
+                 backgroundColor: SURFACE,
+                 position: "relative",
+                 maxHeight: "38vh",
+                 aspectRatio: "16/10",
+               }}>
   {p.images && p.images.length > 0 && (
     <>
       <img
         src={p.images[slideIndex[p.id] ?? 0]}
         alt={p.title}
-        style={{ width: "100%", height: "100%", aspectRatio: "16/10", objectFit: "contain", objectPosition: "center top", opacity: 0.88, transition: "opacity 0.4s" }}
+        style={{ width: "100%", height: "100%", maxHeight: "38vh", objectFit: "contain", objectPosition: "center top", opacity: 0.88, transition: "opacity 0.4s" }}
       />
 
       {p.images.length > 1 && (
@@ -370,7 +376,7 @@ const prevSlide = (id: string, total: number) => {
     </>
   )}
 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", paddingTop: "0.5rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingTop: "0.5rem" }}>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
                     {[["Location", p.location], ["Type", p.type], ["Year", p.year], ["Capacity", p.capacity]].map(([label, val]) => (
                       <div key={`${p.id}-${label}`}>
@@ -379,7 +385,7 @@ const prevSlide = (id: string, total: number) => {
                       </div>
                     ))}
                   </div>
-                  <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
+                  <p style={{ fontSize: "0.85rem", lineHeight: 1.7, color: DIM, fontWeight: 300 }}>{p.description}</p>
                   <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", cursor: "pointer" }} onClick={() => setActiveProject(null)}>↑ Collapse</span>
                 </div>
               </div>
