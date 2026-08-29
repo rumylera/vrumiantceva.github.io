@@ -418,6 +418,7 @@ const prevSlide = (id: string, total: number) => {
               style={{ marginTop: i === 1 ? "3rem" : i === 3 ? "1.5rem" : "0" }}
             >
               <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", cursor: "pointer" }}
+                onClick={() => setLightboxImage(s.image)}
                 onMouseEnter={e => {
                   const img = e.currentTarget.querySelector("img") as HTMLImageElement;
                   const overlay = e.currentTarget.querySelector(".sk-overlay") as HTMLElement;
@@ -434,8 +435,7 @@ const prevSlide = (id: string, total: number) => {
                 <img
                   src={s.image}
                   alt={s.caption}
-                  onClick={() => setLightboxImage(s.image)}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s", cursor: "pointer" }}
+                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
                 />
                 <div
                   className="sk-overlay"
@@ -468,6 +468,7 @@ const prevSlide = (id: string, total: number) => {
               style={{ marginTop: i % 4 === 1 ? "3rem" : i % 4 === 3 ? "1.5rem" : "0" }}
             >
               <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", cursor: "pointer" }}
+                onClick={() => setLightboxImage(s.image)}
                 onMouseEnter={e => {
                   const img = e.currentTarget.querySelector("img") as HTMLImageElement;
                   const overlay = e.currentTarget.querySelector(".sk-overlay") as HTMLElement;
@@ -484,8 +485,7 @@ const prevSlide = (id: string, total: number) => {
                 <img
                   src={s.image}
                   alt={s.caption}
-                  onClick={() => setLightboxImage(s.image)}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s", cursor: "pointer" }}
+                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
                 />
                 <div
                   className="sk-overlay"
