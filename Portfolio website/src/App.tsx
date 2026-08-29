@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const BG = "#0d2720";
 const SURFACE = "#132820";
@@ -135,6 +135,15 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [slideIndex, setSlideIndex] = useState<Record<string, number>>({});
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxImage(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
 const nextSlide = (id: string, total: number) => {
   setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) + 1) % total }));
@@ -320,7 +329,8 @@ const prevSlide = (id: string, total: number) => {
       <img
         src={p.images[slideIndex[p.id] ?? 0]}
         alt={p.title}
-        style={{ width: "100%", height: "100%", maxHeight: "65vh", objectFit: "contain", objectPosition: "center", opacity: 0.88, transition: "opacity 0.4s" }}
+        onClick={(e) => { e.stopPropagation(); setLightboxImage(p.images[slideIndex[p.id] ?? 0]); }}
+        style={{ width: "100%", height: "100%", maxHeight: "65vh", objectFit: "contain", objectPosition: "center", opacity: 0.88, transition: "opacity 0.4s", cursor: "pointer", }}
       />
 
       {p.images.length > 1 && (
@@ -638,6 +648,35 @@ const prevSlide = (id: string, total: number) => {
           ↑ Back to top
         </button>
       </footer>
+{lightboxImage && (
+  <div
+    onClick={() => setLightboxImage(null)}
+    style={{
+      position: "fixed", inset: 0, zIndex: 100,
+      backgroundColor: "rgba(13,39,32,0.95)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "2rem", cursor: "zoom-out",
+    }}
+  >
+    <img
+      src={lightboxImage}
+      alt="Expanded view"
+      style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+      onClick={(e) => e.stopPropagation()}
+    />
+    <button
+      onClick={() => setLightboxImage(null)}
+      style={{
+        position: "absolute", top: "1.5rem", right: "1.5rem",
+        width: "2.5rem", height: "2.5rem", borderRadius: "50%",
+        background: "rgba(240,237,230,0.1)", border: `1px solid ${BORDER}`, color: FG,
+        cursor: "pointer", fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+    >
+      ×
+    </button>
+  </div>
+)}
     </div>
   );
 }
