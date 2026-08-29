@@ -74,49 +74,49 @@ const sketchbook = [
 ];
 const digital = [
   {
-    id: "d1",
+    id: "01",
     caption: "U Holmov Jest Podcast episode cover",
     medium: "Procreate",
     image: "U_Holmov_160_1.png",
   },
   {
-    id: "d2",
+    id: "02",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee.jpg",
   },
   {
-    id: "d3",
+    id: "03",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee1.jpg",
   },
   {
-    id: "d4",
+    id: "04",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee2.jpg",
   },
   {
-    id: "d5",
+    id: "05",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee3.jpg",
   },
   {
-    id: "d6",
+    id: "06",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee4.jpg",
   },
   {
-    id: "d7",
+    id: "07",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee5.jpg",
   },
   {
-    id: "d8",
+    id: "08",
     caption: "One coffee one sketch meeting poster",
     medium: "Procreate",
     image: "onecoffee6.jpg",
