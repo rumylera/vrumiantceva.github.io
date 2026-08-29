@@ -42,7 +42,7 @@ const projects = [
     capacity: "24 flats",
     description:
       "A residential complex on an angular plot in Gdansk. The ground floor activates the street with a coffee shop, library/bookstore, record store, gym, restaurant, art supply store, and wine shop. Upper floors hold 24 flats across two typologies — 57 m² two-bedroom units and 97 m² larger flats — served by a shared underground parking level. The elevations use a restrained palette of grey render, dark green vertical cladding, and warm timber door surrounds.",
-    images: ["/image.png", "/philosophia2.jpg", "/philosophia3.jpg"],
+    images: ["/image.png", "/philosophia2.png", "/philosophia3.png"],
   },
 ];
 
