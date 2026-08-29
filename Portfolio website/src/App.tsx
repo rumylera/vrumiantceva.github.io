@@ -49,25 +49,25 @@ const projects = [
 const sketchbook = [
   {
     id: "01",
-    caption: "Tarte Tatin, Hasselt",
+    caption: "Tarte Tatin & Coffee Cafe, Hasselt, Belgium",
     medium: "Ink and pencil on paper",
     image: "IMG_0938.png",
   },
   {
     id: "02",
-    caption: "Restaurant interior, Belgium",
+    caption: "Tarte Tatin & Boulebaar, Hasselt, Belgium",
     medium: "Ink and pencil on paper",
     image: "IMG_0936.png",
   },
   {
     id: "03",
-    caption: "Boulebaar, Hasselt",
+    caption: "Vanilla Ontbijt & Boulebaar, Hasselt/Diepenbeek, Belgium",
     medium: "Ink and pencil on paper",
     image: "IMG_0937.png",
   },
   {
     id: "04",
-    caption: "Klatch.bar, Hasselt",
+    caption: "Klatch.bar & Boulebaar, Hasselt, Belgium",
     medium: "Ink and pencil on paper",
     image: "IMG_0914.PNG",
   },
