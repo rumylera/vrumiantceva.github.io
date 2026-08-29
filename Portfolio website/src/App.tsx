@@ -434,7 +434,7 @@ const prevSlide = (id: string, total: number) => {
                 <img
                   src={s.image}
                   alt={s.caption}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0, transition: "opacity 0.4s, transform 0.5s" }}
+                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
                 />
                 <div
                   className="sk-overlay"
