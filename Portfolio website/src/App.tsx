@@ -20,7 +20,7 @@ const projects = [
     capacity: "30 guests",
     description:
       "Adaptive Reuse of a medieval fortress in Tuscany.",
-    images: ["Ripafratta.png", "Ripafratta2.jpg", "Ripafratta3.jpg"],
+    images: ["/Ripafratta.png", "/Ripafratta2.jpg", "/Ripafratta3.jpg"],
   },
   {
     id: "02",
@@ -31,7 +31,7 @@ const projects = [
     capacity: "40 guests",
     description:
       "A cultural complex seamlessly integrated into a hillside park in Cape Town. After researching the site with CPUT students, two insights emerged: Capetonians are deeply committed to the natural landscape, and there is a notable absence of cinemas in this part of the city. The result — a long, low-rise structure with a corridor-terrace as its spine, shielded from southeast winds by a system of rotating copper shutters. Materials: rammed earth, non-oxidised copper (aging to teal over time), and glass.",
-    images: ["viavia.jpg","ViaVia_model.png"],
+    images: ["/viavia.jpg","/ViaVia_model.png"],
   },
   {
     id: "03",
@@ -42,7 +42,7 @@ const projects = [
     capacity: "24 flats",
     description:
       "A residential complex on an angular plot in Gdansk. The ground floor activates the street with a coffee shop, library/bookstore, record store, gym, restaurant, art supply store, and wine shop. Upper floors hold 24 flats across two typologies — 57 m² two-bedroom units and 97 m² larger flats — served by a shared underground parking level. The elevations use a restrained palette of grey render, dark green vertical cladding, and warm timber door surrounds.",
-    images: ["/src/imports/image.png", "philosophia2.jpg", "philosophia3.jpg"],
+    images: ["/src/imports/image.png", "/philosophia2.jpg", "/philosophia3.jpg"],
   },
 ];
 
