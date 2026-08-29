@@ -31,7 +31,7 @@ const projects = [
     capacity: "40 guests",
     description:
       "A cultural complex seamlessly integrated into a hillside park in Cape Town. After researching the site with CPUT students, two insights emerged: Capetonians are deeply committed to the natural landscape, and there is a notable absence of cinemas in this part of the city. The result — a long, low-rise structure with a corridor-terrace as its spine, shielded from southeast winds by a system of rotating copper shutters. Materials: rammed earth, non-oxidised copper (aging to teal over time), and glass.",
-    images: ["/viavia.jpg","/viavia_2.jpg", "/viavia_3.jpg", "/viavia_4.jpg", "/viavia_5.jpg", "/viavia_6.jpg", "/ViaVia_model.png"],
+    images: ["/viavia.jpg","/viavia_2.jpg", "/viavia_3.jpg", "/viavia_4.jpg", "/viavia_5.jpg", "/viavia_6.jpg", "/viavia_7.jpg", "/viavia_8.jpg", "/viavia_9.jpg", "/viavia_10.jpg", "/ViaVia_model.png"],
   },
   {
     id: "03",
