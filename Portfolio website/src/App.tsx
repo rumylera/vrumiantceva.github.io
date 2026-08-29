@@ -434,7 +434,8 @@ const prevSlide = (id: string, total: number) => {
                 <img
                   src={s.image}
                   alt={s.caption}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
+                  onClick={() => setLightboxImage(s.image)}
+                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s", cursor: "pointer" }}
                 />
                 <div
                   className="sk-overlay"
@@ -483,7 +484,8 @@ const prevSlide = (id: string, total: number) => {
                 <img
                   src={s.image}
                   alt={s.caption}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
+                  onClick={() => setLightboxImage(s.image)}
+                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s", cursor: "pointer" }}
                 />
                 <div
                   className="sk-overlay"
