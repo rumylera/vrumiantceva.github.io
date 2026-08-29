@@ -314,13 +314,13 @@ const prevSlide = (id: string, total: number) => {
 
             {activeProject === p.id && (
               <div style={{ paddingBottom: "2.5rem", borderBottom: `1px solid rgba(240,237,230,0.08)`, display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }} className="md:grid-cols-2">
-               <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", maxHeight: "38vh", display: "flex", alignItems: "center", justifyContent: "center", }}>
+               <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", maxHeight: "65vh", display: "flex", alignItems: "center", justifyContent: "center", }}>
   {p.images && p.images.length > 0 && (
     <>
       <img
         src={p.images[slideIndex[p.id] ?? 0]}
         alt={p.title}
-        style={{ width: "100%", height: "100%", maxHeight: "65%", objectFit: "contain", objectPosition: "center", opacity: 0.88, transition: "opacity 0.4s" }}
+        style={{ width: "100%", height: "100%", maxHeight: "65vh", objectFit: "contain", objectPosition: "center", opacity: 0.88, transition: "opacity 0.4s" }}
       />
 
       {p.images.length > 1 && (
