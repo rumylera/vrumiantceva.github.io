@@ -69,7 +69,7 @@ const sketchbook = [
     id: "04",
     caption: "Klatch.bar, Hasselt",
     medium: "Ink and pencil on paper",
-    image: "IMG_0914.png",
+    image: "IMG_0914.PNG",
   },
 ];
 const digital = [
