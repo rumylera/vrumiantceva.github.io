@@ -30,7 +30,7 @@ const projects = [
     type: "Hostel / Café / Cinema",
     capacity: "40 guests",
     description:
-      "A cultural complex seamlessly integrated into a hillside park in Cape Town. After researching the site with CPUT students, two insights emerged: Capetonians are deeply committed to the natural landscape, and there is a notable absence of cinemas in this part of the city. The result — a long, low-rise structure with a corridor-terrace as its spine, shielded from southeast winds by a system of rotating copper shutters. Materials: rammed earth, non-oxidised copper (aging to teal over time), and glass.",
+      "A cultural complex seamlessly integrated into a hillside park in Cape Town.",
     images: ["/viavia.jpg","/viavia_2.jpg", "/viavia_3.jpg", "/viavia_4.jpg", "/viavia_5.jpg", "/viavia_6.jpg", "/viavia_7.jpg", "/viavia_8.jpg", "/viavia_9.jpg", "/viavia_10.jpg", "/ViaVia_model.png"],
   },
   {
@@ -41,7 +41,7 @@ const projects = [
     type: "Residential Complex",
     capacity: "24 flats",
     description:
-      "A residential complex on an angular plot in Gdansk. The ground floor activates the street with a coffee shop, library/bookstore, record store, gym, restaurant, art supply store, and wine shop. Upper floors hold 24 flats across two typologies — 57 m² two-bedroom units and 97 m² larger flats — served by a shared underground parking level. The elevations use a restrained palette of grey render, dark green vertical cladding, and warm timber door surrounds.",
+      "A residential complex on an angular plot in Gdansk.",
     images: ["/image.png", "/philosophia2.png", "/philosophia3.png"],
   },
 ];
