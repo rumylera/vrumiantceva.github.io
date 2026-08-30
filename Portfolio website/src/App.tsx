@@ -17,7 +17,7 @@ const projects = [
     year: "2026",
     location: "Ripafratta, Italy",
     type: "Hostel / Café / Climbing Complex",
-    capacity: "30 guests",
+    capacity: "24 guests",
     description:
       "Adaptive Reuse of a medieval fortress in Tuscany.",
     images: ["/ripafratta1.jpg", "/ripafratta2.jpg", "/ripafratta3.jpg", "/ripafratta4.jpg", "/ripafratta5.jpg", "/ripafratta6.jpg", "ripafratta7.jpg", ],
