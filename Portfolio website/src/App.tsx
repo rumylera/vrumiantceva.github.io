@@ -393,10 +393,10 @@ const prevSlide = (id: string, total: number) => {
                   </div>
                   <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
                   {p.pdfLink && (
-                    
+                      <a
                       href={p.pdfLink},
-                      target="_blank",
-                      rel="noopener noreferrer",
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.1em", textTransform: "uppercase",
                         color: COPPER, textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(196,107,58,0.4)",
