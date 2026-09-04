@@ -33,6 +33,7 @@ const projects = [
     description:
       "A cultural complex seamlessly integrated into a hillside park in Cape Town.",
     images: ["/viavia.jpg","/viavia_2.jpg", "/viavia_3.jpg", "/viavia_4.jpg", "/viavia_5.jpg", "/viavia_6.jpg", "/viavia_7.jpg", "/viavia_8.jpg", "/viavia_9.jpg", "/viavia_10.jpg", "/viavia_materials.jpg", "/viavia_model.jpg"],
+    pdfLink: "/project booklet pdf (spreads).pdf",
   },
   {
     id: "03",
