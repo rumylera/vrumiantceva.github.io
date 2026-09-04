@@ -394,7 +394,7 @@ const prevSlide = (id: string, total: number) => {
                   <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
                   {p.pdfLink && (
                       <a
-                      href={p.pdfLink},
+                      href={p.pdfLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
