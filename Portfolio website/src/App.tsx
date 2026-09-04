@@ -19,7 +19,7 @@ const projects = [
     type: "Hostel / Café / Climbing Complex",
     capacity: "24 guests",
     description:
-      "Adaptive Reuse of a medieval fortress in Tuscany.",
+      "Adaptive Reuse of a medieval fortress in Tuscany. BSc Diploma project.",
     images: ["/ripafratta1.jpg", "/ripafratta2.jpg", "/ripafratta3.jpg", "/ripafratta4.jpg", "/ripafratta5.jpg", "/ripafratta6.jpg", "ripafratta7.jpg", ],
     pdfLink: "/DYPLOM_ESEJ_CAŁY.pdf",
   },
