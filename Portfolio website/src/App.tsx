@@ -21,6 +21,7 @@ const projects = [
     description:
       "Adaptive Reuse of a medieval fortress in Tuscany.",
     images: ["/ripafratta1.jpg", "/ripafratta2.jpg", "/ripafratta3.jpg", "/ripafratta4.jpg", "/ripafratta5.jpg", "/ripafratta6.jpg", "ripafratta7.jpg", ],
+    pdfLink: "/DYPLOM_ESEJ_CAŁY.pdf",
   },
   {
     id: "02",
@@ -390,6 +391,22 @@ const prevSlide = (id: string, total: number) => {
                     ))}
                   </div>
                   <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
+                  {p.pdfLink && (
+  
+                      href={p.pdfLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                      fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.1em", textTransform: "uppercase",
+                      color: COPPER, textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor:       "rgba(196,107,58,0.4)",
+      transition: "opacity 0.2s", width: "fit-content",
+    }}
+    onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+  >
+    full text here
+  </a>
+)}
                   <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", cursor: "pointer" }} onClick={() => setActiveProject(null)}>↑ Collapse</span>
                 </div>
               </div>
