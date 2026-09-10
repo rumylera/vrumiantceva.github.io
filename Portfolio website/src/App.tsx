@@ -183,7 +183,7 @@ const prevSlide = (id: string, total: number) => {
         </button>
 
         <div className="hidden md:flex" style={{ gap: "2rem" }}>
-          {["projects", "sketchbook","digital", "about", "contact"].map((s) => (
+          {["projects", "article", "sketchbook","digital", "about", "contact"].map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
@@ -210,7 +210,7 @@ const prevSlide = (id: string, total: number) => {
       {/* Mobile menu */}
       {menuOpen && (
         <div style={{ position: "fixed", inset: 0, zIndex: 40, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2.5rem", backgroundColor: BG }}>
-          {["projects", "sketchbook","digital", "about", "contact"].map((s) => (
+          {["projects", "article", "sketchbook","digital", "about", "contact"].map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
@@ -416,7 +416,70 @@ const prevSlide = (id: string, total: number) => {
           </div>
         ))}
       </section>
+      {/* ── HORROR ARCHITECTURE ARTICLE ─────────────────────── */}
+      <section id="article" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Horror Architecture Article</h2>
+          
+            href="/Horror_Arch_Article.pdf"
+            download
+            style={{
+              fontFamily: MONO, fontSize: "0.65rem", color: DIM, letterSpacing: "0.1em", textTransform: "uppercase",
+              textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
+            onMouseLeave={e => (e.currentTarget.style.color = DIM)}
+          >
+            ↓ Download PDF
+          </a>
+        </div>
 
+        <p style={{ maxWidth: "34rem", fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300, marginBottom: "3rem" }}>
+          Horror Buildings and Where to Find Them: Exploring Adaptive Reuse Through the Lens of Horror Architecture. Research Training essay, facArk UHasselt, a.y. 23/24.
+        </p>
+
+        {/* Desktop: embedded viewer */}
+        <div className="hidden md:block">
+          <object
+            data="/Horror_Arch_Article.pdf"
+            type="application/pdf"
+            style={{ width: "100%", height: "85vh", border: `1px solid ${BORDER}` }}
+          >
+            <p style={{ color: DIM, fontSize: "0.85rem" }}>
+              Unable to display PDF.{" "}
+              <a href="/Horror_Arch_Article.pdf" style={{ color: COPPER }}>Download it here</a> instead.
+            </p>
+          </object>
+        </div>
+
+        {/* Mobile: fallback card with download prompt */}
+        <div
+          className="md:hidden"
+          style={{
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            gap: "1.5rem", padding: "4rem 2rem", backgroundColor: SURFACE, border: `1px solid ${BORDER}`,
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontFamily: SERIF, fontSize: "1.4rem", color: FG }}>Horror Architecture Article</p>
+          <p style={{ fontSize: "0.85rem", color: DIM, lineHeight: 1.7, maxWidth: "24rem" }}>
+            For the best viewing experience on mobile, download the full PDF.
+          </p>
+          
+            href="/Horror_Arch_Article.pdf"
+            download
+            style={{
+              padding: "0.75rem 1.5rem", fontFamily: MONO, fontSize: "0.68rem",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              border: `1px solid rgba(240,237,230,0.3)`, background: "none", color: FG,
+              cursor: "pointer",
+            }}
+          >
+            ↓ Download PDF
+          </a>
+        </div>
+      </section>
       {/* ── SKETCHBOOK ───────────────────────────────────────── */}
       <section id="sketchbook" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3.5rem" }}>
