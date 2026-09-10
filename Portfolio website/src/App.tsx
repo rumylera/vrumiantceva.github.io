@@ -286,7 +286,6 @@ const prevSlide = (id: string, total: number) => {
         </div>
       </section>
 
-      {/* ── PROJECTS ─────────────────────────────────────────── */}
         {/* ── PROJECTS ─────────────────────────────────────────── */}
       <section id="projects" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
@@ -430,7 +429,7 @@ const prevSlide = (id: string, total: number) => {
             }}
             onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
             onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-          >
+          
             ↓ Download PDF
           </a>
         </div>
