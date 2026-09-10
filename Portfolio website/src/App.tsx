@@ -474,7 +474,7 @@ const prevSlide = (id: string, total: number) => {
               border: `1px solid rgba(240,237,230,0.3)`, background: "none", color: FG,
               cursor: "pointer",
             }}
-          >
+          
             ↓ Download PDF
           </a>
         </div>
