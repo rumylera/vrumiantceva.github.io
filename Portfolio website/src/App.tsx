@@ -134,6 +134,7 @@ const skills = [
 
 export default function App() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [articleOpen, setArticleOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [slideIndex, setSlideIndex] = useState<Record<string, number>>({});
@@ -416,69 +417,92 @@ export default function App() {
         ))}
       </section>
 
-      {/* ── HORROR ARCHITECTURE ARTICLE ─────────────────────── */}
+      {/* ── ARTICLE ─────────────────────── */}
       <section id="article" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3rem" }}>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Horror Architecture Article</h2>
-          <a
-            href="/Horror_Arch_Article.pdf"
-            download
-            style={{
-              fontFamily: MONO, fontSize: "0.65rem", color: DIM, letterSpacing: "0.1em", textTransform: "uppercase",
-              textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)",
-              transition: "color 0.2s",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
-            onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-          >
-            ↓ Download PDF
-          </a>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Article</h2>
+          <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM }}>Research Essay · UHasselt</span>
         </div>
 
-        <p style={{ maxWidth: "34rem", fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300, marginBottom: "3rem" }}>
-          Horror Buildings and Where to Find Them: Exploring Adaptive Reuse Through the Lens of Horror Architecture. Research Training essay, facArk UHasselt, a.y. 23/24.
-        </p>
-
-        {/* Desktop: embedded viewer */}
-        <div className="hidden md:block">
-          <object
-            data="/Horror_Arch_Article.pdf"
-            type="application/pdf"
-            style={{ width: "100%", height: "85vh", border: `1px solid ${BORDER}` }}
-          >
-            <p style={{ color: DIM, fontSize: "0.85rem" }}>
-              Unable to display PDF.{" "}
-              <a href="/Horror_Arch_Article.pdf" style={{ color: COPPER }}>Download it here</a> instead.
-            </p>
-          </object>
-        </div>
-
-        {/* Mobile: fallback card with download prompt */}
-        <div
-          className="md:hidden"
+        <button
           style={{
-            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-            gap: "1.5rem", padding: "4rem 2rem", backgroundColor: SURFACE, border: `1px solid ${BORDER}`,
-            textAlign: "center",
+            width: "100%", textAlign: "left", padding: "1.75rem 0",
+            background: "none", border: "none",
+            borderBottom: "1px solid rgba(240,237,230,0.08)",
+            cursor: "pointer",
           }}
+          onClick={() => setArticleOpen(!articleOpen)}
         >
-          <p style={{ fontFamily: SERIF, fontSize: "1.4rem", color: FG }}>Horror Architecture Article</p>
-          <p style={{ fontSize: "0.85rem", color: DIM, lineHeight: 1.7, maxWidth: "24rem" }}>
-            For the best viewing experience on mobile, download the full PDF.
-          </p>
-          <a
-            href="/Horror_Arch_Article.pdf"
-            download
-            style={{
-              padding: "0.75rem 1.5rem", fontFamily: MONO, fontSize: "0.68rem",
-              letterSpacing: "0.18em", textTransform: "uppercase",
-              border: `1px solid rgba(240,237,230,0.3)`, background: "none", color: FG,
-              cursor: "pointer",
-            }}
-          >
-            ↓ Download PDF
-          </a>
-        </div>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+            <span
+              style={{ fontFamily: SERIF, fontSize: "clamp(1.25rem, 3.5vw, 1.75rem)", color: articleOpen ? COPPER : FG, transition: "color 0.2s" }}
+            >
+              Horror Buildings and Where to Find Them
+            </span>
+            <span style={{ color: DIM, fontSize: "0.9rem", display: "inline-block", transform: articleOpen ? "rotate(45deg)" : "none", transition: "transform 0.2s", flexShrink: 0 }}>+</span>
+          </div>
+        </button>
+
+        {articleOpen && (
+          <div style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem", borderBottom: "1px solid rgba(240,237,230,0.08)" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", marginBottom: "2rem" }}>
+              <p style={{ maxWidth: "34rem", fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>
+                Exploring Adaptive Reuse Through the Lens of Horror Architecture. Research Training essay, facArk UHasselt, a.y. 23/24.
+              </p>
+              <a
+                href="/Horror_Arch_Article.pdf"
+                download
+                style={{
+                  fontFamily: MONO, fontSize: "0.65rem", color: DIM, letterSpacing: "0.1em", textTransform: "uppercase",
+                  textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)",
+                  transition: "color 0.2s", flexShrink: 0,
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
+                onMouseLeave={e => (e.currentTarget.style.color = DIM)}
+              >
+                ↓ Download PDF
+              </a>
+            </div>
+
+            {/* Desktop: book-style scrollable viewer */}
+            <div
+              className="hidden md:block"
+              style={{
+                maxWidth: "50rem", margin: "0 auto",
+                backgroundColor: "#1a1512", padding: "1.5rem",
+                boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
+              }}
+            >
+              <div style={{ overflowY: "auto", height: "80vh", backgroundColor: "#fff" }}>
+                <object
+                  data="/Horror_Arch_Article.pdf"
+                  type="application/pdf"
+                  style={{ width: "100%", height: "80vh", border: "none", display: "block" }}
+                >
+                  <p style={{ color: "#333", fontSize: "0.85rem", padding: "2rem" }}>
+                    Unable to display PDF.{" "}
+                    <a href="/Horror_Arch_Article.pdf" style={{ color: COPPER }}>Download it here</a> instead.
+                  </p>
+                </object>
+              </div>
+            </div>
+
+            {/* Mobile: fallback card with download prompt */}
+            <div
+              className="md:hidden"
+              style={{
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                gap: "1.5rem", padding: "4rem 2rem", backgroundColor: SURFACE, border: `1px solid ${BORDER}`,
+                textAlign: "center",
+              }}
+            >
+              <p style={{ fontFamily: SERIF, fontSize: "1.4rem", color: FG }}>Horror Architecture Article</p>
+              <p style={{ fontSize: "0.85rem", color: DIM, lineHeight: 1.7, maxWidth: "24rem" }}>
+                For the best viewing experience on mobile, download the full PDF.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ── SKETCHBOOK ───────────────────────────────────────── */}
