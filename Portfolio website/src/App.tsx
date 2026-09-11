@@ -147,12 +147,12 @@ export default function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-const nextSlide = (id: string, total: number) => {
-  setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) + 1) % total }));
-};
-const prevSlide = (id: string, total: number) => {
-  setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) - 1 + total) % total }));
-};
+  const nextSlide = (id: string, total: number) => {
+    setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) + 1) % total }));
+  };
+  const prevSlide = (id: string, total: number) => {
+    setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) - 1 + total) % total }));
+  };
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -183,7 +183,7 @@ const prevSlide = (id: string, total: number) => {
         </button>
 
         <div className="hidden md:flex" style={{ gap: "2rem" }}>
-          {["projects", "article", "sketchbook","digital", "about", "contact"].map((s) => (
+          {["projects", "article", "sketchbook", "digital", "about", "contact"].map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
@@ -210,7 +210,7 @@ const prevSlide = (id: string, total: number) => {
       {/* Mobile menu */}
       {menuOpen && (
         <div style={{ position: "fixed", inset: 0, zIndex: 40, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2.5rem", backgroundColor: BG }}>
-          {["projects", "article", "sketchbook","digital", "about", "contact"].map((s) => (
+          {["projects", "article", "sketchbook", "digital", "about", "contact"].map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
@@ -286,7 +286,7 @@ const prevSlide = (id: string, total: number) => {
         </div>
       </section>
 
-        {/* ── PROJECTS ─────────────────────────────────────────── */}
+      {/* ── PROJECTS ─────────────────────────────────────────── */}
       <section id="projects" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
@@ -393,7 +393,7 @@ const prevSlide = (id: string, total: number) => {
                   </div>
                   <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
                   {p.pdfLink && (
-                      <a
+                    <a
                       href={p.pdfLink}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -415,11 +415,12 @@ const prevSlide = (id: string, total: number) => {
           </div>
         ))}
       </section>
+
       {/* ── HORROR ARCHITECTURE ARTICLE ─────────────────────── */}
       <section id="article" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3rem" }}>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Horror Architecture Article</h2>
-          
+          <a
             href="/Horror_Arch_Article.pdf"
             download
             style={{
@@ -429,7 +430,7 @@ const prevSlide = (id: string, total: number) => {
             }}
             onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
             onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-         
+          >
             ↓ Download PDF
           </a>
         </div>
@@ -465,7 +466,7 @@ const prevSlide = (id: string, total: number) => {
           <p style={{ fontSize: "0.85rem", color: DIM, lineHeight: 1.7, maxWidth: "24rem" }}>
             For the best viewing experience on mobile, download the full PDF.
           </p>
-          
+          <a
             href="/Horror_Arch_Article.pdf"
             download
             style={{
@@ -474,11 +475,12 @@ const prevSlide = (id: string, total: number) => {
               border: `1px solid rgba(240,237,230,0.3)`, background: "none", color: FG,
               cursor: "pointer",
             }}
-         
+          >
             ↓ Download PDF
           </a>
         </div>
       </section>
+
       {/* ── SKETCHBOOK ───────────────────────────────────────── */}
       <section id="sketchbook" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3.5rem" }}>
@@ -533,7 +535,8 @@ const prevSlide = (id: string, total: number) => {
           ))}
         </div>
       </section>
-{/* ── DIGITAL WORKS ───────────────────────────────────────── */}
+
+      {/* ── DIGITAL WORKS ───────────────────────────────────────── */}
       <section id="digital" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3.5rem" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
@@ -643,7 +646,7 @@ const prevSlide = (id: string, total: number) => {
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 {[
                   ["University of Milano-Bicocca", "AI4ST, MSc", "2026 – current"],
-                  ["Politechnika Gdańska", "Architecture, BSc", " 2021 – 2026"],
+                  ["Politechnika Gdańska", "Architecture, BSc", " 2021 – 2026"],
                   ["Universiteit Hasselt", "Architecture, Erasmus+", "2023 – 2024"],
                   ["St Petersburg State University", "Applied Mathematics & CS, BSc", "2018 – 2021"],
                 ].map(([school, degree, years]) => (
@@ -731,35 +734,35 @@ const prevSlide = (id: string, total: number) => {
           ↑ Back to top
         </button>
       </footer>
-{lightboxImage && (
-  <div
-    onClick={() => setLightboxImage(null)}
-    style={{
-      position: "fixed", inset: 0, zIndex: 100,
-      backgroundColor: "rgba(13,39,32,0.95)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      padding: "2rem", cursor: "zoom-out",
-    }}
-  >
-    <img
-      src={lightboxImage}
-      alt="Expanded view"
-      style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
-      onClick={(e) => e.stopPropagation()}
-    />
-    <button
-      onClick={() => setLightboxImage(null)}
-      style={{
-        position: "absolute", top: "1.5rem", right: "1.5rem",
-        width: "2.5rem", height: "2.5rem", borderRadius: "50%",
-        background: "rgba(240,237,230,0.1)", border: `1px solid ${BORDER}`, color: FG,
-        cursor: "pointer", fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center",
-      }}
-    >
-      ×
-    </button>
-  </div>
-)}
+      {lightboxImage && (
+        <div
+          onClick={() => setLightboxImage(null)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            backgroundColor: "rgba(13,39,32,0.95)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "2rem", cursor: "zoom-out",
+          }}
+        >
+          <img
+            src={lightboxImage}
+            alt="Expanded view"
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            onClick={() => setLightboxImage(null)}
+            style={{
+              position: "absolute", top: "1.5rem", right: "1.5rem",
+              width: "2.5rem", height: "2.5rem", borderRadius: "50%",
+              background: "rgba(240,237,230,0.1)", border: `1px solid ${BORDER}`, color: FG,
+              cursor: "pointer", fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 }
