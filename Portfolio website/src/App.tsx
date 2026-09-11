@@ -429,7 +429,7 @@ const prevSlide = (id: string, total: number) => {
             }}
             onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
             onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-         <a>
+         <a
             ↓ Download PDF
           </a>
         </div>
@@ -474,7 +474,7 @@ const prevSlide = (id: string, total: number) => {
               border: `1px solid rgba(240,237,230,0.3)`, background: "none", color: FG,
               cursor: "pointer",
             }}
-          <a>
+          <a
             ↓ Download PDF
           </a>
         </div>
