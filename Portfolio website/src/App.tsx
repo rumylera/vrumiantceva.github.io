@@ -417,10 +417,10 @@ export default function App() {
         ))}
       </section>
 
-      {/* ── ARTICLE ─────────────────────── */}
+      {/* ── HORROR ARCHITECTURE ARTICLE ─────────────────────── */}
       <section id="article" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Article</h2>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Horror Architecture Article</h2>
           <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM }}>Research Essay · UHasselt</span>
         </div>
 
@@ -491,7 +491,7 @@ export default function App() {
             <div
               className="md:hidden"
               style={{
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                display: window.innerWidth > 768 ? "none" : "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                 gap: "1.5rem", padding: "4rem 2rem", backgroundColor: SURFACE, border: `1px solid ${BORDER}`,
                 textAlign: "center",
               }}
