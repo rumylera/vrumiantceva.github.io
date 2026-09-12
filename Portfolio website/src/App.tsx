@@ -447,7 +447,8 @@ export default function App() {
           <div style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem", borderBottom: "1px solid rgba(240,237,230,0.08)" }}>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", marginBottom: "2rem" }}>
               <p style={{ maxWidth: "34rem", fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>
-                Exploring Adaptive Reuse Through the Lens of Horror Architecture. Research Training essay, facArk UHasselt, a.y. 23/24.
+                Exploring Adaptive Reuse Through the Lens of Horror Architecture.
+Research Training essay, facArk UHasselt, a.y. 23/24.
               </p>
               <a
                 href="/Horror_Arch_Article.pdf"
