@@ -128,7 +128,7 @@ const digital = [
 const skills = [
   "AutoCAD", "Revit", "SketchUp",
   "Procreate", "Figma",
-  "Adobe InDesign", "C++", "Pyhton",
+  "Adobe InDesign", "C++", "Python",
   "HTML and CSS", "MATLAB", "MySQL",
 ];
 
@@ -701,15 +701,6 @@ Research Training essay, facArk UHasselt, a.y. 23/24.
             <p style={{ fontFamily: SERIF, fontSize: "clamp(2rem, 5vw, 3.25rem)", lineHeight: 1.2, fontWeight: 400, marginBottom: "2.5rem" }}>
               Open to collaborations, paid internships, and project work.
             </p>
-            <a
-              href="mailto:rumylera@yandex.ru"
-              style={{ fontSize: "1rem", color: DIM, fontWeight: 300, textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
-              onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-            >
-              rumylera@yandex.ru
-            </a>
-            <br />
              <a
               href="mailto:rumylera@gmail.com"
               style={{ fontSize: "1rem", color: DIM, fontWeight: 300, textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)", transition: "color 0.2s" }}
