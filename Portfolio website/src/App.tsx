@@ -451,7 +451,7 @@ export default function App() {
 Research Training essay, facArk UHasselt, a.y. 23/24.
               </p>
               <a
-                href="/Horror_Arch_Article.pdf"
+                href="/Horror_Arch_Article_fixed.pdf"
                 download
                 style={{
                   fontFamily: MONO, fontSize: "0.65rem", color: DIM, letterSpacing: "0.1em", textTransform: "uppercase",
@@ -476,7 +476,7 @@ Research Training essay, facArk UHasselt, a.y. 23/24.
             >
               <div style={{ overflowY: "auto", height: "80vh", backgroundColor: "#fff" }}>
                 <object
-                  data="/Horror_Arch_Article.pdf"
+                  data="/Horror_Arch_Article_fixed.pdf"
                   type="application/pdf"
                   style={{ width: "100%", height: "80vh", border: "none", display: "block" }}
                 >
