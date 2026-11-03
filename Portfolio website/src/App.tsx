@@ -207,6 +207,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<Record<string, number>>({});
   const [lightbox, setLightbox] = useState<LightboxState>(null);
+  const [showTop, setShowTop] = useState(false);
 
   const openLightbox = useCallback((images: string[], index: number) => setLightbox({ images, index }), []);
   const stepLightbox = useCallback((dir: 1 | -1) => {
@@ -227,6 +228,13 @@ export default function App() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, stepLightbox]);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = lightbox || menuOpen ? "hidden" : "";
@@ -258,7 +266,7 @@ export default function App() {
       {/* ── NAV ── */}
       <nav
         aria-label="Main"
-        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border bg-bg/90 px-[clamp(1.5rem,6vw,2rem)] py-4 backdrop-blur-md"
+        className="absolute inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border bg-bg/40 px-[clamp(1.5rem,6vw,2rem)] py-4"
       >
         <button
           onClick={() => scrollTo("hero")}
@@ -341,16 +349,16 @@ export default function App() {
               BSc Architecture, Politechnika Gdańska (2026) · Erasmus+ at Universiteit Hasselt · now
               studying AI for Science and Technology at Milano-Bicocca.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="grid max-w-md grid-cols-2 gap-3 sm:flex sm:max-w-none sm:gap-4">
               <button
                 onClick={() => scrollTo("projects")}
-                className="flex-1 bg-copper px-6 py-4 font-mono sm:flex-none sm:py-3 text-[0.75rem] uppercase tracking-[0.18em] text-bg transition hover:bg-copper-light"
+                className="whitespace-nowrap bg-copper px-3 py-4 text-center font-mono text-[0.75rem] uppercase tracking-[0.1em] text-bg transition hover:bg-copper-light sm:px-6 sm:py-3 sm:tracking-[0.18em]"
               >
                 View projects
               </button>
               <a
                 href={`mailto:${EMAIL}?subject=Opportunity%20for%20Valeriia`}
-                className="flex-1 border border-fg/30 px-6 py-4 text-center font-mono sm:flex-none sm:py-3 text-[0.75rem] uppercase tracking-[0.18em] text-fg transition hover:border-fg/70"
+                className="whitespace-nowrap border border-fg/30 px-3 py-4 text-center font-mono text-[0.75rem] uppercase tracking-[0.1em] text-fg transition hover:border-fg/70 sm:px-6 sm:py-3 sm:tracking-[0.18em]"
               >
                 Get in touch
               </a>
@@ -690,6 +698,18 @@ export default function App() {
           ↑ Back to top
         </button>
       </footer>
+
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        tabIndex={showTop ? 0 : -1}
+        className={`fixed right-3 z-30 flex h-11 w-11 items-center justify-center rounded-full border border-fg/20 bg-bg/80 text-lg text-fg shadow-lg backdrop-blur-sm transition duration-300 hover:border-copper hover:text-copper bottom-[max(1.25rem,env(safe-area-inset-bottom))] ${
+          showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
+        }`}
+      >
+        <span aria-hidden="true">↑</span>
+      </button>
 
       {lightbox && (
         <div
