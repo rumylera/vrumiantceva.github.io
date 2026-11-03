@@ -1,16 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-const BG = "#0d2720";
-const SURFACE = "#132820";
-const FG = "#f0ede6";
-const DIM = "#b8b0a0";
-const COPPER = "#c46b3a";
-const BORDER = "rgba(240,237,230,0.1)";
-const SERIF = "'DM Serif Display', Georgia, serif";
-const SANS = "'Work Sans', system-ui, sans-serif";
-const MONO = "'DM Mono', monospace";
+/* ── Content ─────────────────────────────────────────────────── */
 
-const projects = [
+type Project = {
+  id: string;
+  title: string;
+  year: string;
+  location: string;
+  type: string;
+  capacity: string;
+  summary: string;
+  description: string;
+  tags: string[];
+  images: string[];
+  pdfLink?: string;
+  pdfLabel?: string;
+};
+
+const projects: Project[] = [
   {
     id: "01",
     title: "Ripafratta Fortress",
@@ -18,10 +25,16 @@ const projects = [
     location: "Ripafratta, Italy",
     type: "Hostel / Café / Climbing Complex",
     capacity: "24 guests",
+    summary: "Medieval fortress in Tuscany reborn as a hostel, café and climbing complex.",
     description:
-      "Adaptive Reuse of a medieval fortress in Tuscany. BSc Diploma project.",
-    images: ["/ripafratta1.jpg", "/ripafratta2.jpg", "/ripafratta3.jpg", "/ripafratta4.jpg", "/ripafratta5.jpg", "/ripafratta6.jpg", "ripafratta7.jpg", ],
+      "BSc diploma project. Adaptive reuse of a medieval fortress in Tuscany, turning it into a hostel, café and climbing complex for 24 guests. The full written thesis is available as a PDF.",
+    tags: ["Adaptive reuse", "Heritage", "BSc diploma"],
+    images: [
+      "/ripafratta1.jpg", "/ripafratta2.jpg", "/ripafratta3.jpg", "/ripafratta4.jpg",
+      "/ripafratta5.jpg", "/ripafratta6.jpg", "/ripafratta7.jpg",
+    ],
     pdfLink: "/DYPLOM_ESEJ_CAŁY.pdf",
+    pdfLabel: "Read the diploma essay (PDF)",
   },
   {
     id: "02",
@@ -30,753 +43,673 @@ const projects = [
     location: "Cape Town, South Africa",
     type: "Hostel / Café / Cinema",
     capacity: "40 guests",
+    summary: "A cultural complex set into a hillside park in Cape Town.",
     description:
-      "A cultural complex seamlessly integrated into a hillside park in Cape Town.",
-    images: ["/viavia.jpg","/viavia_2.jpg", "/viavia_3.jpg", "/viavia_4.jpg", "/viavia_5.jpg", "/viavia_6.jpg", "/viavia_7.jpg", "/viavia_8.jpg", "/viavia_9.jpg", "/viavia_10.jpg", "/viavia_materials.jpg", "/viavia_model.jpg"],
-    pdfLink: "/project booklet pdf (spreads).pdf",
+      "A hostel, café and cinema for 40 guests, integrated into a hillside park in Cape Town. The booklet shows the full design: drawings, materials and model.",
+    tags: ["Cultural", "Landscape", "Model making"],
+    images: [
+      "/viavia.jpg", "/viavia_2.jpg", "/viavia_3.jpg", "/viavia_4.jpg", "/viavia_5.jpg",
+      "/viavia_6.jpg", "/viavia_7.jpg", "/viavia_8.jpg", "/viavia_9.jpg", "/viavia_10.jpg",
+      "/viavia_materials.jpg", "/viavia_model.jpg",
+    ],
+    pdfLink: "/project booklet pdf (spreads) - Valeriia Rumiantceva.pdf",
+    pdfLabel: "Open the project booklet (PDF)",
   },
   {
     id: "03",
     title: "Philosophia",
     year: "2023",
-    location: "Gdansk, Poland",
+    location: "Gdańsk, Poland",
     type: "Residential Complex",
     capacity: "24 flats",
+    summary: "A 24-flat residential complex on an angular plot in Gdańsk.",
     description:
-      "A residential complex on an angular plot in Gdansk.",
+      "A residential complex of 24 flats on an angular urban plot in Gdańsk.",
+    tags: ["Housing", "Urban plot"],
     images: ["/image.png", "/philosophia2.png", "/philosophia3.png"],
   },
 ];
 
-const sketchbook = [
-  {
-    id: "01",
-    caption: "Tarte Tatin & Coffee Cafe, Hasselt, Belgium",
-    medium: "Ink and pencil on paper",
-    image: "IMG_0938.png",
-  },
-  {
-    id: "02",
-    caption: "Tarte Tatin & Boulebaar, Hasselt, Belgium",
-    medium: "Ink and pencil on paper",
-    image: "IMG_0936.png",
-  },
-  {
-    id: "03",
-    caption: "Vanilla Ontbijt & Boulebaar, Hasselt/Diepenbeek, Belgium",
-    medium: "Ink and pencil on paper",
-    image: "IMG_0937.png",
-  },
-  {
-    id: "04",
-    caption: "Klatch.bar & Boulebaar, Hasselt, Belgium",
-    medium: "Ink and pencil on paper",
-    image: "IMG_0914.PNG",
-  },
-];
-const digital = [
-  {
-    id: "01",
-    caption: "U Holmov Jest Podcast episode cover",
-    medium: "Procreate",
-    image: "U_Holmov_160_1.png",
-  },
-  {
-    id: "02",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee.jpg",
-  },
-  {
-    id: "03",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee1.jpg",
-  },
-  {
-    id: "04",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee2.jpg",
-  },
-  {
-    id: "05",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee3.jpg",
-  },
-  {
-    id: "06",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee4.jpg",
-  },
-  {
-    id: "07",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee5.jpg",
-  },
-  {
-    id: "08",
-    caption: "One coffee one sketch meeting poster",
-    medium: "Procreate",
-    image: "onecoffee6.jpg",
-  },
+type Artwork = { id: string; caption: string; medium: string; image: string };
+
+const sketchbook: Artwork[] = [
+  { id: "01", caption: "Tarte Tatin & Coffee Cafe, Hasselt, Belgium", medium: "Ink and pencil on paper", image: "/IMG_0938.png" },
+  { id: "02", caption: "Tarte Tatin & Boulebaar, Hasselt, Belgium", medium: "Ink and pencil on paper", image: "/IMG_0936.png" },
+  { id: "03", caption: "Vanilla Ontbijt & Boulebaar, Hasselt/Diepenbeek, Belgium", medium: "Ink and pencil on paper", image: "/IMG_0937.png" },
+  { id: "04", caption: "Klatch.bar & Boulebaar, Hasselt, Belgium", medium: "Ink and pencil on paper", image: "/IMG_0914.PNG" },
 ];
 
-const skills = [
-  "AutoCAD", "Revit", "SketchUp",
-  "Procreate", "Figma",
-  "Adobe InDesign", "C++", "Python",
-  "HTML and CSS", "MATLAB", "MySQL",
+const digital: Artwork[] = [
+  { id: "01", caption: "U Holmov Jest Podcast episode cover", medium: "Procreate", image: "/U_Holmov_160_1.png" },
+  ...["onecoffee", "onecoffee1", "onecoffee2", "onecoffee3", "onecoffee4", "onecoffee5", "onecoffee6"].map(
+    (name, i): Artwork => ({
+      id: String(i + 2).padStart(2, "0"),
+      caption: "One Coffee One Sketch meeting poster",
+      medium: "Procreate",
+      image: `/${name}.jpg`,
+    }),
+  ),
 ];
+
+const skillGroups: { label: string; items: string[] }[] = [
+  { label: "Architecture", items: ["AutoCAD", "Revit", "SketchUp"] },
+  { label: "Graphics", items: ["Adobe InDesign", "Procreate", "Figma"] },
+  { label: "Code & data", items: ["Python", "C++", "MATLAB", "MySQL", "HTML & CSS"] },
+];
+
+const languages: [string, string][] = [
+  ["Russian", "native"],
+  ["English", "fluent"],
+  ["Polish", "conversational"],
+];
+const basicLanguages = "German, French, Spanish, Swedish, Italian (basic)";
+
+const education: [string, string, string][] = [
+  ["University of Milano-Bicocca", "MSc, Artificial Intelligence for Science and Technology", "2026 – now"],
+  ["Politechnika Gdańska", "BSc, Architecture", "2021 – 2026"],
+  ["Universiteit Hasselt", "Erasmus+, Architecture", "2023 – 2024"],
+  ["St Petersburg State University", "BSc, Applied Mathematics & Computer Science", "2018 – 2021"],
+];
+
+const NAV = [
+  ["projects", "Projects"],
+  ["about", "About"],
+  ["article", "Research"],
+  ["sketchbook", "Sketchbook"],
+  ["digital", "Digital"],
+  ["contact", "Contact"],
+] as const;
+
+const EMAIL = "rumylera@gmail.com";
+
+/* ── Small shared pieces ─────────────────────────────────────── */
+
+const label = "font-mono text-[0.62rem] tracking-[0.18em] uppercase text-copper";
+const sectionPad = "px-[clamp(1.5rem,6vw,4rem)] py-20 md:py-24";
+
+function SectionHeader({ title, note }: { title: string; note?: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4 border-b border-border pb-6">
+      <h2 className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-normal">{title}</h2>
+      {note && <span className="font-mono text-[0.65rem] text-cream-dim text-right">{note}</span>}
+    </div>
+  );
+}
+
+type LightboxState = { images: string[]; index: number } | null;
+
+function ArtGrid({
+  items,
+  open,
+  stagger,
+}: {
+  items: Artwork[];
+  open: (images: string[], index: number) => void;
+  stagger?: boolean;
+}) {
+  const all = items.map((i) => i.image);
+  return (
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      {items.map((s, i) => (
+        <figure
+          key={s.id}
+          className={stagger ? (i % 4 === 1 ? "md:mt-12" : i % 4 === 3 ? "md:mt-6" : "") : ""}
+        >
+          <button
+            type="button"
+            onClick={() => open(all, i)}
+            aria-label={`Enlarge: ${s.caption}`}
+            className="group relative block w-full cursor-zoom-in overflow-hidden bg-surface"
+          >
+            <img
+              src={s.image}
+              alt={`${s.caption} (${s.medium})`}
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+            />
+            <span className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-bg/85 to-transparent to-55% p-4 opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="font-mono text-[0.6rem] tracking-widest text-copper">{s.medium}</span>
+            </span>
+          </button>
+          <figcaption className="mt-3 flex items-start justify-between gap-2">
+            <span className="font-display text-[0.9rem] leading-snug">{s.caption}</span>
+            <span className="mt-0.5 shrink-0 font-mono text-[0.6rem] text-copper">{s.id}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+/* ── App ─────────────────────────────────────────────────────── */
 
 export default function App() {
-  const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [activeProject, setActiveProject] = useState<string | null>("01");
   const [articleOpen, setArticleOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [slideIndex, setSlideIndex] = useState<Record<string, number>>({});
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<LightboxState>(null);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightboxImage(null);
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+  const openLightbox = useCallback((images: string[], index: number) => setLightbox({ images, index }), []);
+  const stepLightbox = useCallback((dir: 1 | -1) => {
+    setLightbox((lb) =>
+      lb ? { ...lb, index: (lb.index + dir + lb.images.length) % lb.images.length } : lb,
+    );
   }, []);
 
-  const nextSlide = (id: string, total: number) => {
-    setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) + 1) % total }));
-  };
-  const prevSlide = (id: string, total: number) => {
-    setSlideIndex(prev => ({ ...prev, [id]: ((prev[id] ?? 0) - 1 + total) % total }));
-  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightbox(null);
+        setMenuOpen(false);
+      }
+      if (lightbox && e.key === "ArrowRight") stepLightbox(1);
+      if (lightbox && e.key === "ArrowLeft") stepLightbox(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox, stepLightbox]);
+
+  useEffect(() => {
+    document.body.style.overflow = lightbox || menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, menuOpen]);
+
+  const slide = (id: string, total: number, dir: 1 | -1) =>
+    setSlideIndex((prev) => ({ ...prev, [id]: ((prev[id] ?? 0) + dir + total) % total }));
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
   };
 
-  return (
-    <div style={{ minHeight: "100%", width: "100%", backgroundColor: BG, color: FG, fontFamily: SANS }}>
+  const circleBtn =
+    "flex h-9 w-9 items-center justify-center rounded-full border border-border bg-bg/60 text-fg backdrop-blur-sm transition hover:bg-bg/90";
 
-      {/* ── NAV ──────────────────────────────────────────────── */}
+  return (
+    <div className="min-h-full w-full bg-bg font-body text-fg">
+      <a
+        href="#projects"
+        className="fixed left-2 top-2 z-[100] -translate-y-[200%] rounded bg-fg px-3 py-2 font-mono text-xs text-bg focus:translate-y-0"
+      >
+        Skip to projects
+      </a>
+
+      {/* ── NAV ── */}
       <nav
-        style={{
-          position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "1.25rem 2rem",
-          borderBottom: `1px solid ${BORDER}`,
-          backgroundColor: "rgba(13,39,32,0.92)",
-          backdropFilter: "blur(14px)",
-        }}
+        aria-label="Main"
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border bg-bg/90 px-[clamp(1.5rem,6vw,2rem)] py-4 backdrop-blur-md"
       >
         <button
           onClick={() => scrollTo("hero")}
-          style={{ fontFamily: MONO, fontSize: "0.72rem", letterSpacing: "0.2em", color: FG, background: "none", border: "none", cursor: "pointer", transition: "opacity 0.2s" }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
-          onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+          className="font-mono text-[0.72rem] tracking-[0.2em] text-fg transition-opacity hover:opacity-60"
         >
           V. Rumiantceva
         </button>
 
-        <div className="hidden md:flex" style={{ gap: "2rem" }}>
-          {["projects", "article", "sketchbook", "digital", "about", "contact"].map((s) => (
+        <div className="hidden gap-8 md:flex">
+          {NAV.map(([id, text]) => (
             <button
-              key={s}
-              onClick={() => scrollTo(s)}
-              style={{ fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.18em", color: DIM, textTransform: "uppercase", background: "none", border: "none", cursor: "pointer", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = FG)}
-              onMouseLeave={e => (e.currentTarget.style.color = DIM)}
+              key={id}
+              onClick={() => scrollTo(id)}
+              className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-cream-dim transition-colors hover:text-fg"
             >
-              {s}
+              {text}
             </button>
           ))}
         </div>
 
         <button
-          className="md:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{ display: "flex", flexDirection: "column", gap: "5px", padding: "4px", background: "none", border: "none", cursor: "pointer" }}
-          aria-label="Toggle menu"
+          className="flex flex-col gap-[5px] p-2 md:hidden"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
         >
-          <span style={{ display: "block", width: "20px", height: "1px", backgroundColor: FG }} />
-          <span style={{ display: "block", width: "20px", height: "1px", backgroundColor: FG }} />
+          <span className="block h-px w-5 bg-fg" />
+          <span className="block h-px w-5 bg-fg" />
         </button>
       </nav>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 40, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2.5rem", backgroundColor: BG }}>
-          {["projects", "article", "sketchbook", "digital", "about", "contact"].map((s) => (
-            <button
-              key={s}
-              onClick={() => scrollTo(s)}
-              style={{ fontFamily: SERIF, fontSize: "2rem", color: FG, background: "none", border: "none", cursor: "pointer" }}
-            >
-              {s}
+        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-9 bg-bg">
+          {NAV.map(([id, text]) => (
+            <button key={id} onClick={() => scrollTo(id)} className="font-display text-3xl text-fg">
+              {text}
             </button>
           ))}
         </div>
       )}
 
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section
-        id="hero"
-        style={{
-          minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end",
-          paddingTop: "6rem", paddingBottom: "4rem", paddingLeft: "clamp(2rem, 6vw, 4rem)", paddingRight: "clamp(2rem, 6vw, 4rem)",
-          position: "relative", overflow: "hidden",
-        }}
-      >
-        {/* Split canvas */}
-        <div style={{ position: "absolute", inset: 0, display: "flex" }}>
-          <div style={{ width: "100%", backgroundColor: BG }} className="md:w-1/2" />
-          <div style={{ display: "none", position: "relative", backgroundColor: SURFACE }} className="md:block md:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1602367381755-effb73319501?w=1200&h=900&fit=crop&auto=format"
-              alt="Cape Town architecture"
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.45, mixBlendMode: "luminosity" }}
-            />
-            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${BG} 0%, transparent 25%)` }} />
-          </div>
-        </div>
-
-        {/* Text */}
-        <div style={{ position: "relative", zIndex: 10, maxWidth: "56rem" }}>
-          <p style={{ fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.22em", color: COPPER, textTransform: "uppercase", marginBottom: "1.5rem" }}>
-           Portfolio 2026
-          </p>
-          <h1
-            style={{
-              fontFamily: SERIF, fontWeight: 400,
-              fontSize: "clamp(3.5rem, 10vw, 7.5rem)",
-              lineHeight: 1, marginBottom: "2rem",
-            }}
-          >
-            Valeriia
-            <br />
-            <em>Rumiantceva</em>
-          </h1>
-          <p style={{ fontSize: "1rem", lineHeight: 1.8, maxWidth: "26rem", color: DIM, fontWeight: 300, marginBottom: "2.5rem" }}>
-            Architecture BSc at Politechnika Gdańska (2026). Erasmus+ at Universiteit Hasselt (a.y. 23/24). 
-          </p>
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-            <button
-              onClick={() => scrollTo("projects")}
-              style={{
-                padding: "0.75rem 1.5rem", fontFamily: MONO, fontSize: "0.68rem",
-                letterSpacing: "0.18em", textTransform: "uppercase",
-                border: `1px solid rgba(240,237,230,0.3)`, background: "none", color: FG,
-                cursor: "pointer", transition: "opacity 0.2s",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
-              onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-            >
-              View Projects
-            </button>
-            <span style={{ fontFamily: MONO, fontSize: "0.72rem", color: DIM }}>↓ Scroll</span>
-          </div>
-        </div>
-
-        <div style={{ position: "absolute", bottom: "2rem", right: "2rem", fontFamily: MONO, fontSize: "0.65rem", color: "rgba(184,176,160,0.4)", letterSpacing: "0.12em" }}>
-          Gdańsk, Poland · 2026
-        </div>
-      </section>
-
-      {/* ── PROJECTS ─────────────────────────────────────────── */}
-      <section id="projects" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
-            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Projects</h2>
-          </div>
-          <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM }}>Study Work · BSc</span>
-        </div>
-
-        {projects.map((p) => (
-          <div key={p.id}>
-            <button
-              style={{
-                width: "100%", textAlign: "left", padding: "1.75rem 0",
-                borderBottom: `1px solid ${BORDER}`, background: "none", border: "none",
-                borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "rgba(240,237,230,0.08)",
-                cursor: "pointer",
-              }}
-              onClick={() => setActiveProject(activeProject === p.id ? null : p.id)}
-            >
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "clamp(1rem, 3vw, 2.5rem)", flex: 1, minWidth: 0 }}>
-                  <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, flexShrink: 0 }}>{p.id}</span>
-                  <span
-                    style={{ fontFamily: SERIF, fontSize: "clamp(1.25rem, 3.5vw, 1.75rem)", color: activeProject === p.id ? COPPER : FG, transition: "color 0.2s", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
-                  >
-                    {p.title}
-                  </span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexShrink: 0 }}>
-                  <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM, display: window.innerWidth > 768 ? "block" : "none" }}>{p.type}</span>
-                  <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM }}>{p.year}</span>
-                  <span style={{ color: DIM, fontSize: "0.9rem", display: "inline-block", transform: activeProject === p.id ? "rotate(45deg)" : "none", transition: "transform 0.2s" }}>+</span>
-                </div>
-              </div>
-            </button>
-
-            {activeProject === p.id && (
-              <div style={{ paddingBottom: "2.5rem", borderBottom: `1px solid rgba(240,237,230,0.08)`, display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }} className="md:grid-cols-2">
-               <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", maxHeight: "65vh", display: "flex", alignItems: "center", justifyContent: "center", }}>
-  {p.images && p.images.length > 0 && (
-    <>
-      <img
-        src={p.images[slideIndex[p.id] ?? 0]}
-        alt={p.title}
-        onClick={(e) => { e.stopPropagation(); setLightboxImage(p.images[slideIndex[p.id] ?? 0]); }}
-        style={{ width: "100%", height: "100%", maxHeight: "65vh", objectFit: "contain", objectPosition: "center", opacity: 0.88, transition: "opacity 0.4s", cursor: "pointer", }}
-      />
-
-      {p.images.length > 1 && (
-        <>
-          {/* Prev / Next arrows */}
-          <button
-            onClick={(e) => { e.stopPropagation(); prevSlide(p.id, p.images.length); }}
-            style={{
-              position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)",
-              width: "2rem", height: "2rem", borderRadius: "50%",
-              background: "rgba(13,39,32,0.6)", border: `1px solid ${BORDER}`, color: FG,
-              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: MONO, fontSize: "0.9rem",
-            }}
-          >
-            ‹
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); nextSlide(p.id, p.images.length); }}
-            style={{
-              position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)",
-              width: "2rem", height: "2rem", borderRadius: "50%",
-              background: "rgba(13,39,32,0.6)", border: `1px solid ${BORDER}`, color: FG,
-              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: MONO, fontSize: "0.9rem",
-            }}
-          >
-            ›
-          </button>
-
-          {/* Dot indicators */}
-          <div style={{ position: "absolute", bottom: "0.75rem", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "0.4rem" }}>
-            {p.images.map((_, i) => (
-              <span
-                key={i}
-                onClick={(e) => { e.stopPropagation(); setSlideIndex(prev => ({ ...prev, [p.id]: i })); }}
-                style={{
-                  width: "6px", height: "6px", borderRadius: "50%", cursor: "pointer",
-                  background: (slideIndex[p.id] ?? 0) === i ? COPPER : "rgba(240,237,230,0.35)",
-                  transition: "background 0.2s",
-                }}
-              />
-            ))}
-          </div>
-        </>
-      )}
-    </>
-  )}
-</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", paddingTop: "0.5rem" }}>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
-                    {[["Location", p.location], ["Type", p.type], ["Year", p.year], ["Capacity", p.capacity]].map(([label, val]) => (
-                      <div key={`${p.id}-${label}`}>
-                        <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "0.2rem" }}>{label}</p>
-                        <p style={{ fontSize: "0.85rem", color: FG, fontWeight: 400 }}>{val}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <p style={{ fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>{p.description}</p>
-                  {p.pdfLink && (
-                    <a
-                      href={p.pdfLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.1em", textTransform: "uppercase",
-                        color: COPPER, textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(196,107,58,0.4)",
-                        transition: "opacity 0.2s", width: "fit-content",
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
-                      onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    >
-                      full text here
-                    </a>
-                  )}
-                  <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", cursor: "pointer" }} onClick={() => setActiveProject(null)}>↑ Collapse</span>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </section>
-
-      {/* ── HORROR ARCHITECTURE ARTICLE ─────────────────────── */}
-      <section id="article" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "0" }}>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Article</h2>
-          <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM }}>Research Essay · UHasselt</span>
-        </div>
-
-        <button
-          style={{
-            width: "100%", textAlign: "left", padding: "1.75rem 0",
-            background: "none", border: "none",
-            borderBottom: "1px solid rgba(240,237,230,0.08)",
-            cursor: "pointer",
-          }}
-          onClick={() => setArticleOpen(!articleOpen)}
+      <main>
+        {/* ── HERO ── */}
+        <section
+          id="hero"
+          className="relative flex min-h-screen flex-col justify-end overflow-hidden px-[clamp(1.5rem,6vw,4rem)] pb-16 pt-28"
         >
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+          <div className="absolute inset-0 flex" aria-hidden="true">
+            <div className="w-full bg-bg md:w-1/2" />
+            <div className="relative hidden bg-surface md:block md:w-1/2">
+              <img
+                src="/ripafratta1.jpg"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover opacity-50"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-bg to-transparent to-25%" />
+            </div>
+          </div>
+
+          <div className="relative z-10 max-w-4xl">
+            <p className="mb-6 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-copper">
+              Architecture · Portfolio 2026
+            </p>
+            <h1 className="mb-8 font-display text-[clamp(3.25rem,10vw,7.5rem)] font-normal leading-none">
+              Valeriia
+              <br />
+              <em>Rumiantceva</em>
+            </h1>
+            <p className="mb-3 max-w-md font-display text-[clamp(1.2rem,2.4vw,1.6rem)] leading-snug">
+              Architecture graduate designing adaptive-reuse and cultural buildings, drawn by hand and
+              resolved in Revit.
+            </p>
+            <p className="mb-10 max-w-md text-[0.95rem] font-light leading-relaxed text-cream-dim">
+              BSc Architecture, Politechnika Gdańska (2026) · Erasmus+ at Universiteit Hasselt · now
+              studying AI for Science and Technology at Milano-Bicocca.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => scrollTo("projects")}
+                className="bg-copper px-6 py-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-bg transition hover:bg-copper-light"
+              >
+                View projects
+              </button>
+              <a
+                href={`mailto:${EMAIL}?subject=Opportunity%20for%20Valeriia`}
+                className="border border-fg/30 px-6 py-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-fg transition hover:border-fg/70"
+              >
+                Get in touch
+              </a>
+            </div>
+          </div>
+
+          <div className="absolute bottom-8 right-8 hidden font-mono text-[0.65rem] tracking-[0.12em] text-cream-dim/60 md:block">
+            Gdańsk, Poland · Open to internships &amp; junior roles
+          </div>
+        </section>
+
+        {/* ── PROJECTS ── */}
+        <section id="projects" className={sectionPad}>
+          <SectionHeader title="Selected projects" note="Studio work · BSc Architecture" />
+
+          {projects.map((p) => {
+            const isOpen = activeProject === p.id;
+            const idx = slideIndex[p.id] ?? 0;
+            return (
+              <article key={p.id} className="border-b border-fg/10">
+                <button
+                  className="flex w-full items-center gap-4 py-6 text-left md:gap-8"
+                  onClick={() => setActiveProject(isOpen ? null : p.id)}
+                  aria-expanded={isOpen}
+                  aria-controls={`project-${p.id}`}
+                >
+                  <span className="shrink-0 font-mono text-[0.68rem] text-copper">{p.id}</span>
+                  <img
+                    src={p.images[0]}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="hidden h-16 w-24 shrink-0 bg-surface object-cover sm:block"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={`block font-display text-[clamp(1.25rem,3.5vw,1.75rem)] transition-colors ${isOpen ? "text-copper" : "text-fg"}`}
+                    >
+                      {p.title}
+                    </span>
+                    <span className="mt-1 block text-[0.85rem] font-light text-cream-dim">
+                      {p.summary}
+                    </span>
+                  </span>
+                  <span className="hidden font-mono text-[0.65rem] text-cream-dim lg:block">{p.type}</span>
+                  <span className="shrink-0 font-mono text-[0.65rem] text-cream-dim">{p.year}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`inline-block shrink-0 text-cream-dim transition-transform ${isOpen ? "rotate-45" : ""}`}
+                  >
+                    +
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div id={`project-${p.id}`} className="grid gap-8 pb-10 md:grid-cols-2">
+                    <div className="relative flex max-h-[65vh] items-center justify-center overflow-hidden bg-surface">
+                      <img
+                        src={p.images[idx]}
+                        alt={`${p.title}, image ${idx + 1} of ${p.images.length}`}
+                        onClick={() => openLightbox(p.images, idx)}
+                        className="max-h-[65vh] w-full cursor-zoom-in object-contain"
+                      />
+                      {p.images.length > 1 && (
+                        <>
+                          <button
+                            aria-label="Previous image"
+                            onClick={() => slide(p.id, p.images.length, -1)}
+                            className={`${circleBtn} absolute left-3 top-1/2 -translate-y-1/2`}
+                          >
+                            ‹
+                          </button>
+                          <button
+                            aria-label="Next image"
+                            onClick={() => slide(p.id, p.images.length, 1)}
+                            className={`${circleBtn} absolute right-3 top-1/2 -translate-y-1/2`}
+                          >
+                            ›
+                          </button>
+                          <span className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-bg/70 px-2 py-1 font-mono text-[0.6rem] text-fg">
+                            {idx + 1} / {p.images.length}
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-6">
+                      <dl className="grid grid-cols-2 gap-x-6 gap-y-4">
+                        {(
+                          [
+                            ["Location", p.location],
+                            ["Type", p.type],
+                            ["Year", p.year],
+                            ["Capacity", p.capacity],
+                          ] as const
+                        ).map(([k, v]) => (
+                          <div key={k}>
+                            <dt className={`${label} mb-1`}>{k}</dt>
+                            <dd className="text-[0.88rem]">{v}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                      <p className="text-[0.92rem] font-light leading-[1.85] text-cream-dim">{p.description}</p>
+                      <ul className="flex flex-wrap gap-2">
+                        {p.tags.map((t) => (
+                          <li
+                            key={t}
+                            className="border border-fg/15 px-3 py-1 font-mono text-[0.62rem] tracking-wide text-cream-dim"
+                          >
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+                      {p.pdfLink && (
+                        <a
+                          href={p.pdfLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-fit font-mono text-[0.7rem] uppercase tracking-widest text-copper underline decoration-copper/40 underline-offset-[6px] transition hover:opacity-70"
+                        >
+                          {p.pdfLabel ?? "Full document"} ↗
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </section>
+
+        {/* ── ABOUT ── */}
+        <section id="about" className={sectionPad}>
+          <SectionHeader title="About" />
+          <div className="mt-14 grid gap-14 md:grid-cols-2 md:gap-20">
+            <div className="flex flex-col gap-8">
+              <p className="font-display text-[clamp(1.4rem,3vw,1.9rem)] leading-[1.35]">
+                I design buildings that give old structures a second life, and I bring a mathematician&rsquo;s
+                rigour and a sketcher&rsquo;s eye to every one.
+              </p>
+              <div className="flex flex-col gap-4 text-[0.92rem] font-light leading-[1.85] text-cream-dim">
+                <p>
+                  I finished my BSc in Architecture at Politechnika Gdańska in 2026 with a diploma on
+                  turning a Tuscan medieval fortress into a hostel and climbing complex. An Erasmus+ year at
+                  Universiteit Hasselt added research on horror architecture and adaptive reuse, and a
+                  sketchbook habit I have kept ever since.
+                </p>
+                <p>
+                  Before architecture I studied Applied Mathematics and Computer Science in St Petersburg.
+                  That is why I am comfortable with Revit and parametric thinking, and why I am now
+                  studying AI for Science and Technology in Milan to explore how computation can serve design.
+                </p>
+              </div>
+              <div>
+                <p className={`${label} mb-4`}>Education</p>
+                <ul className="flex flex-col gap-4">
+                  {education.map(([school, degree, years]) => (
+                    <li key={school} className="flex justify-between gap-4">
+                      <div>
+                        <p className="text-[0.88rem]">{school}</p>
+                        <p className="mt-0.5 font-mono text-[0.62rem] text-cream-dim">{degree}</p>
+                      </div>
+                      <span className="shrink-0 font-mono text-[0.62rem] text-cream-dim">{years}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-10">
+              <div>
+                <p className={`${label} mb-4`}>Tools &amp; skills</p>
+                <div className="flex flex-col gap-5">
+                  {skillGroups.map((g) => (
+                    <div key={g.label}>
+                      <p className="mb-2 font-mono text-[0.62rem] text-cream-dim">{g.label}</p>
+                      <ul className="flex flex-wrap gap-2">
+                        {g.items.map((s) => (
+                          <li
+                            key={s}
+                            className="border border-fg/15 px-3 py-1 font-mono text-[0.68rem] tracking-wide text-fg"
+                          >
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border-t border-border pt-8">
+                <p className={`${label} mb-4`}>Languages</p>
+                <ul className="flex flex-col gap-2">
+                  {languages.map(([lang, level]) => (
+                    <li key={lang} className="flex items-baseline justify-between">
+                      <span className="text-[0.88rem]">{lang}</span>
+                      <span className="font-mono text-[0.62rem] text-cream-dim">{level}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 font-mono text-[0.62rem] leading-relaxed text-cream-dim">{basicLanguages}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── RESEARCH ── */}
+        <section id="article" className={sectionPad}>
+          <SectionHeader title="Research" note="Essay · UHasselt, 2023/24" />
+          <button
+            className="flex w-full items-start justify-between gap-4 border-b border-fg/10 py-7 text-left"
+            onClick={() => setArticleOpen((o) => !o)}
+            aria-expanded={articleOpen}
+            aria-controls="article-body"
+          >
             <span
-              style={{ fontFamily: SERIF, fontSize: "clamp(1.25rem, 3.5vw, 1.75rem)", color: articleOpen ? COPPER : FG, transition: "color 0.2s" }}
+              className={`font-display text-[clamp(1.25rem,3.5vw,1.75rem)] transition-colors ${articleOpen ? "text-copper" : "text-fg"}`}
             >
               Horror Buildings and Where to Find Them
             </span>
-            <span style={{ color: DIM, fontSize: "0.9rem", display: "inline-block", transform: articleOpen ? "rotate(45deg)" : "none", transition: "transform 0.2s", flexShrink: 0 }}>+</span>
-          </div>
-        </button>
+            <span aria-hidden="true" className={`shrink-0 text-cream-dim transition-transform ${articleOpen ? "rotate-45" : ""}`}>
+              +
+            </span>
+          </button>
 
-        {articleOpen && (
-          <div style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem", borderBottom: "1px solid rgba(240,237,230,0.08)" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", marginBottom: "2rem" }}>
-              <p style={{ maxWidth: "34rem", fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300 }}>
-                Exploring Adaptive Reuse Through the Lens of Horror Architecture.
-Research Training essay, facArk UHasselt, a.y. 23/24.
-              </p>
-              <a
-                href="/Horror_Arch_Article_fixed.pdf"
-                download
-                style={{
-                  fontFamily: MONO, fontSize: "0.65rem", color: DIM, letterSpacing: "0.1em", textTransform: "uppercase",
-                  textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)",
-                  transition: "color 0.2s", flexShrink: 0,
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
-                onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-              >
-                ↓ Download PDF
-              </a>
-            </div>
+          {articleOpen && (
+            <div id="article-body" className="border-b border-fg/10 py-10">
+              <div className="mb-8 flex flex-wrap items-start justify-between gap-6">
+                <p className="max-w-xl text-[0.92rem] font-light leading-[1.85] text-cream-dim">
+                  Exploring adaptive reuse through the lens of horror architecture. Research training essay,
+                  Faculty of Architecture and Arts, UHasselt, a.y. 2023/24.
+                </p>
+                <a
+                  href="/Horror_Arch_Article_fixed.pdf"
+                  download
+                  className="shrink-0 font-mono text-[0.65rem] uppercase tracking-widest text-cream-dim underline decoration-cream-dim/30 underline-offset-[6px] transition-colors hover:text-copper"
+                >
+                  ↓ Download PDF
+                </a>
+              </div>
 
-            {/* Desktop: book-style scrollable viewer */}
-            <div
-              className="hidden md:block"
-              style={{
-                maxWidth: "50rem", margin: "0 auto",
-                backgroundColor: "#1a1512", padding: "1.5rem",
-                boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
-              }}
-            >
-              <div style={{ overflowY: "auto", height: "80vh", backgroundColor: "#fff" }}>
+              <div className="mx-auto hidden max-w-3xl bg-[#1a1512] p-6 shadow-2xl md:block">
                 <object
                   data="/Horror_Arch_Article_fixed.pdf"
                   type="application/pdf"
-                  style={{ width: "100%", height: "80vh", border: "none", display: "block" }}
+                  className="block h-[80vh] w-full border-0 bg-white"
                 >
-                  <p style={{ color: "#333", fontSize: "0.85rem", padding: "2rem" }}>
-                    Unable to display PDF.{" "}
-                    <a href="/Horror_Arch_Article.pdf" style={{ color: COPPER }}>Download it here</a> instead.
+                  <p className="p-8 text-sm text-neutral-800">
+                    Unable to display the PDF.{" "}
+                    <a href="/Horror_Arch_Article_fixed.pdf" className="text-copper underline">
+                      Download it here
+                    </a>
+                    .
                   </p>
                 </object>
               </div>
-            </div>
 
-            {/* Mobile: fallback card with download prompt */}
-            <div
-              className="md:hidden"
-              style={{
-                display: window.innerWidth > 768 ? "none" : "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                gap: "1.5rem", padding: "4rem 2rem", backgroundColor: SURFACE, border: `1px solid ${BORDER}`,
-                textAlign: "center",
-              }}
-            >
-              <p style={{ fontFamily: SERIF, fontSize: "1.4rem", color: FG }}>Horror Architecture Article</p>
-              <p style={{ fontSize: "0.85rem", color: DIM, lineHeight: 1.7, maxWidth: "24rem" }}>
-                For the best viewing experience on mobile, download the full PDF.
-              </p>
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* ── SKETCHBOOK ───────────────────────────────────────── */}
-      <section id="sketchbook" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3.5rem" }}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
-            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Sketchbook</h2>
-          </div>
-          <span style={{ fontFamily: MONO, fontSize: "0.65rem", color: DIM }}>Observational Drawing</span>
-        </div>
-
-        <p style={{ maxWidth: "34rem", fontSize: "0.9rem", lineHeight: 1.85, color: DIM, fontWeight: 300, marginBottom: "3rem" }}>
-          Alongside project work, a sustained drawing practice — cafés, interiors, and spaces encountered during Erasmus in Belgium. Pencil and ink on paper.
-        </p>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }} className="md:grid-cols-4">
-          {sketchbook.map((s, i) => (
-            <div
-              key={s.id}
-              style={{ marginTop: i === 1 ? "3rem" : i === 3 ? "1.5rem" : "0" }}
-            >
-              <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", cursor: "pointer" }}
-                onClick={() => setLightboxImage(s.image)}
-                onMouseEnter={e => {
-                  const img = e.currentTarget.querySelector("img") as HTMLImageElement;
-                  const overlay = e.currentTarget.querySelector(".sk-overlay") as HTMLElement;
-                  if (img) { img.style.opacity = "1"; img.style.transform = "scale(1.05)"; }
-                  if (overlay) overlay.style.opacity = "1";
-                }}
-                onMouseLeave={e => {
-                  const img = e.currentTarget.querySelector("img") as HTMLImageElement;
-                  const overlay = e.currentTarget.querySelector(".sk-overlay") as HTMLElement;
-                  if (img) { img.style.opacity = "0.75"; img.style.transform = "scale(1)"; }
-                  if (overlay) overlay.style.opacity = "0";
-                }}
-              >
-                <img
-                  src={s.image}
-                  alt={s.caption}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
-                />
-                <div
-                  className="sk-overlay"
-                  style={{ position: "absolute", inset: 0, opacity: 0, transition: "opacity 0.3s", display: "flex", alignItems: "flex-end", padding: "1rem", background: "linear-gradient(to top, rgba(13,39,32,0.85) 0%, transparent 55%)" }}
+              <div className="flex flex-col items-center gap-4 border border-border bg-surface px-8 py-14 text-center md:hidden">
+                <p className="font-display text-2xl">Horror Architecture Article</p>
+                <p className="max-w-sm text-sm leading-relaxed text-cream-dim">
+                  PDFs read best in your own viewer on mobile.
+                </p>
+                <a
+                  href="/Horror_Arch_Article_fixed.pdf"
+                  className="bg-copper px-5 py-3 font-mono text-[0.68rem] uppercase tracking-widest text-bg"
                 >
-                  <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.1em" }}>{s.medium}</span>
-                </div>
-              </div>
-              <div style={{ marginTop: "0.75rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
-                <p style={{ fontFamily: SERIF, fontSize: "0.9rem", lineHeight: 1.3 }}>{s.caption}</p>
-                <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, flexShrink: 0, marginTop: "2px" }}>{s.id}</span>
+                  Open PDF
+                </a>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          )}
+        </section>
 
-      {/* ── DIGITAL WORKS ───────────────────────────────────────── */}
-      <section id="digital" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "3.5rem" }}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
-            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Digital Works</h2>
+        {/* ── SKETCHBOOK ── */}
+        <section id="sketchbook" className={sectionPad}>
+          <SectionHeader title="Sketchbook" note="Observational drawing" />
+          <p className="my-10 max-w-xl text-[0.92rem] font-light leading-[1.85] text-cream-dim">
+            Alongside studio work I draw constantly: cafés, interiors and the spaces I met during my
+            Erasmus year in Belgium. Ink and pencil on paper.
+          </p>
+          <ArtGrid items={sketchbook} open={openLightbox} stagger />
+        </section>
+
+        {/* ── DIGITAL ── */}
+        <section id="digital" className={sectionPad}>
+          <SectionHeader title="Digital works" note="Illustration & graphic design" />
+          <div className="mt-10">
+            <ArtGrid items={digital} open={openLightbox} stagger />
           </div>
-        </div>
+        </section>
 
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }} className="md:grid-cols-4">
-          {digital.map((s, i) => (
-            <div
-              key={s.id}
-              style={{ marginTop: i % 4 === 1 ? "3rem" : i % 4 === 3 ? "1.5rem" : "0" }}
-            >
-              <div style={{ overflow: "hidden", backgroundColor: SURFACE, position: "relative", cursor: "pointer" }}
-                onClick={() => setLightboxImage(s.image)}
-                onMouseEnter={e => {
-                  const img = e.currentTarget.querySelector("img") as HTMLImageElement;
-                  const overlay = e.currentTarget.querySelector(".sk-overlay") as HTMLElement;
-                  if (img) { img.style.opacity = "1"; img.style.transform = "scale(1.05)"; }
-                  if (overlay) overlay.style.opacity = "1";
-                }}
-                onMouseLeave={e => {
-                  const img = e.currentTarget.querySelector("img") as HTMLImageElement;
-                  const overlay = e.currentTarget.querySelector(".sk-overlay") as HTMLElement;
-                  if (img) { img.style.opacity = "0.75"; img.style.transform = "scale(1)"; }
-                  if (overlay) overlay.style.opacity = "0";
-                }}
-              >
-                <img
-                  src={s.image}
-                  alt={s.caption}
-                  style={{ width: "100%", height: "auto", display: "block", opacity: 0.75, transition: "opacity 0.4s, transform 0.5s" }}
-                />
-                <div
-                  className="sk-overlay"
-                  style={{ position: "absolute", inset: 0, opacity: 0, transition: "opacity 0.3s", display: "flex", alignItems: "flex-end", padding: "1rem", background: "linear-gradient(to top, rgba(13,39,32,0.85) 0%, transparent 55%)" }}
-                >
-                  <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.1em" }}>{s.medium}</span>
-                </div>
-              </div>
-              <div style={{ marginTop: "0.75rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
-                <p style={{ fontFamily: SERIF, fontSize: "0.9rem", lineHeight: 1.3 }}>{s.caption}</p>
-                <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, flexShrink: 0, marginTop: "2px" }}>{s.id}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── ABOUT ────────────────────────────────────────────── */}
-      <section id="about" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem", borderBottom: `1px solid ${BORDER}`, paddingBottom: "1.5rem", marginBottom: "4rem" }}>
-          <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, letterSpacing: "0.2em" }}></span>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>About</h2>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "4rem" }} className="md:grid-cols-2">
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-            <p style={{ fontFamily: SERIF, fontSize: "clamp(1.4rem, 3vw, 1.9rem)", lineHeight: 1.35, fontWeight: 400 }}>
-              Architecture graduate with a background in mathematics and an eye trained by constant drawing.
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", color: DIM, fontWeight: 300, lineHeight: 1.85, fontSize: "0.9rem" }}>
-              <p>
-                Currently completing a MSc in Artificial Intelligence for Science and Technology at University of Milano-Bicocca (2026 - current). BSc in Architecture at Politechnika Gdańska (2021 – 2026). Previously studied Applied Mathematics and Computer Science at St Petersburg State University (2018 – 2021). Erasmus+ exchange at Universiteit Hasselt, Belgium (2023 – 2024).
+        {/* ── CONTACT ── */}
+        <section id="contact" className={`${sectionPad} border-t border-border`}>
+          <h2 className="mb-12 font-display text-[clamp(1.75rem,4vw,2.5rem)] font-normal">Contact</h2>
+          <div className="grid gap-12 md:grid-cols-2 md:gap-20">
+            <div>
+              <p className="mb-8 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.2]">
+                Looking for an architecture internship or junior role. Let&rsquo;s talk.
               </p>
-              <p>
-                The mathematical training informs how I think about structure and systems. The sketchbook practice keeps me honest about what buildings actually feel like from the inside.
-              </p>
-            </div>
-
-            {/* Skills */}
-            <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem" }}>
-              <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "1rem" }}>Tools & Skills</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {skills.map(s => (
-                  <span
-                    key={s}
-                    style={{ fontFamily: MONO, fontSize: "0.65rem", padding: "0.3rem 0.75rem", border: `1px solid rgba(240,237,230,0.15)`, color: DIM, letterSpacing: "0.05em" }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Languages */}
-            <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem" }}>
-              <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "1rem" }}>Languages</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.35rem 2rem" }}>
-                {[
-                  ["Russian", "native"], ["English", "fluent"],
-                  ["Polish", "conversational"], ["German", "basic"],["French", "basic"],["Spanish", "basic"], ["Swedish", "basic"],["Italian", "basic"]
-                ].map(([lang, level]) => (
-                  <div key={lang} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                    <span style={{ fontSize: "0.85rem", fontWeight: 400 }}>{lang}</span>
-                    <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: DIM, letterSpacing: "0.06em" }}>{level}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Education */}
-            <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem" }}>
-              <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: COPPER, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "1rem" }}>Education</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {[
-                  ["University of Milano-Bicocca", "AI4ST, MSc", "2026 – current"],
-                  ["Politechnika Gdańska", "Architecture, BSc", " 2021 – 2026"],
-                  ["Universiteit Hasselt", "Architecture, Erasmus+", "2023 – 2024"],
-                  ["St Petersburg State University", "Applied Mathematics & CS, BSc", "2018 – 2021"],
-                ].map(([school, degree, years]) => (
-                  <div key={school} style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
-                    <div>
-                      <p style={{ fontSize: "0.85rem", fontWeight: 400 }}>{school}</p>
-                      <p style={{ fontFamily: MONO, fontSize: "0.6rem", color: DIM, marginTop: "0.1rem" }}>{degree}</p>
-                    </div>
-                    <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: DIM, flexShrink: 0 }}>{years}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTACT ──────────────────────────────────────────── */}
-      <section id="contact" style={{ padding: "6rem clamp(2rem, 6vw, 4rem)", borderTop: `1px solid ${BORDER}` }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem", marginBottom: "4rem" }}>
-          <span style={{ fontFamily: MONO, fontSize: "0.68rem", color: COPPER, letterSpacing: "0.2em" }}></span>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 400 }}>Contact</h2>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "4rem" }} className="md:grid-cols-2">
-          <div>
-            <p style={{ fontFamily: SERIF, fontSize: "clamp(2rem, 5vw, 3.25rem)", lineHeight: 1.2, fontWeight: 400, marginBottom: "2.5rem" }}>
-              Open to collaborations, paid internships, and project work.
-            </p>
-             <a
-              href="mailto:rumylera@gmail.com"
-              style={{ fontSize: "1rem", color: DIM, fontWeight: 300, textDecoration: "underline", textUnderlineOffset: "6px", textDecorationColor: "rgba(184,176,160,0.3)", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = COPPER)}
-              onMouseLeave={e => (e.currentTarget.style.color = DIM)}
-            >
-              rumylera@gmail.com
-            </a>
-            <br />
-          </div>
-
-          <div style={{ borderTop: `1px solid ${BORDER}` }}>
-            {[
-              ["Phone", "+48 793 170 854"],
-              ["Location", "80-870 Gdańsk, Poland"],
-            ].map(([label, val]) => (
-              <div
-                key={label}
-                style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1.25rem 0", borderBottom: `1px solid rgba(240,237,230,0.06)` }}
+              <a
+                href={`mailto:${EMAIL}?subject=Opportunity%20for%20Valeriia`}
+                className="inline-block bg-copper px-7 py-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-bg transition hover:bg-copper-light"
               >
-                <span style={{ fontFamily: MONO, fontSize: "0.62rem", color: DIM, letterSpacing: "0.16em", textTransform: "uppercase" }}>{label}</span>
-                <span style={{ fontSize: "0.85rem", fontWeight: 300 }}>{val}</span>
-              </div>
-            ))}
+                {EMAIL}
+              </a>
+            </div>
+            <dl className="border-t border-border">
+              {(
+                [
+                  ["Email", <a key="e" href={`mailto:${EMAIL}`} className="hover:text-copper">{EMAIL}</a>],
+                  ["Phone", <a key="p" href="tel:+48793170854" className="hover:text-copper">+48 793 170 854</a>],
+                  ["Location", "Gdańsk, Poland"],
+                ] as const
+              ).map(([k, v]) => (
+                <div key={k} className="flex items-center justify-between border-b border-fg/[0.06] py-5">
+                  <dt className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-cream-dim">{k}</dt>
+                  <dd className="text-[0.88rem] font-light">{v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* ── FOOTER ───────────────────────────────────────────── */}
-      <footer
-        style={{
-          padding: "2rem clamp(2rem, 6vw, 4rem)",
-          borderTop: `1px solid rgba(240,237,230,0.07)`,
-          display: "flex", flexDirection: "column", gap: "0.75rem",
-        }}
-        className="md:flex-row md:justify-between md:items-center"
-      >
-        <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", letterSpacing: "0.12em" }}>
-          © 2026 Valeriia Rumiantceva — Portfolio 
+      <footer className="flex flex-col gap-3 border-t border-fg/[0.07] px-[clamp(1.5rem,6vw,4rem)] py-8 md:flex-row md:items-center md:justify-between">
+        <span className="font-mono text-[0.6rem] tracking-[0.12em] text-cream-dim/60">
+          © 2026 Valeriia Rumiantceva
         </span>
         <button
           onClick={() => scrollTo("hero")}
-          style={{ fontFamily: MONO, fontSize: "0.6rem", color: "rgba(184,176,160,0.35)", letterSpacing: "0.12em", background: "none", border: "none", cursor: "pointer", transition: "color 0.2s" }}
-          onMouseEnter={e => (e.currentTarget.style.color = DIM)}
-          onMouseLeave={e => (e.currentTarget.style.color = "rgba(184,176,160,0.35)")}
+          className="w-fit font-mono text-[0.6rem] tracking-[0.12em] text-cream-dim/60 transition-colors hover:text-cream-dim"
         >
           ↑ Back to top
         </button>
       </footer>
-      {lightboxImage && (
+
+      {lightbox && (
         <div
-          onClick={() => setLightboxImage(null)}
-          style={{
-            position: "fixed", inset: 0, zIndex: 100,
-            backgroundColor: "rgba(13,39,32,0.95)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "2rem", cursor: "zoom-out",
-          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center bg-bg/95 p-6 md:p-10"
         >
           <img
-            src={lightboxImage}
-            alt="Expanded view"
-            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+            src={lightbox.images[lightbox.index]}
+            alt={`Expanded view, image ${lightbox.index + 1} of ${lightbox.images.length}`}
+            className="max-h-full max-w-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           <button
-            onClick={() => setLightboxImage(null)}
-            style={{
-              position: "absolute", top: "1.5rem", right: "1.5rem",
-              width: "2.5rem", height: "2.5rem", borderRadius: "50%",
-              background: "rgba(240,237,230,0.1)", border: `1px solid ${BORDER}`, color: FG,
-              cursor: "pointer", fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center",
-            }}
+            aria-label="Close"
+            onClick={() => setLightbox(null)}
+            className={`${circleBtn} absolute right-5 top-5 h-10 w-10 text-xl`}
           >
             ×
           </button>
+          {lightbox.images.length > 1 && (
+            <>
+              <button
+                aria-label="Previous image"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  stepLightbox(-1);
+                }}
+                className={`${circleBtn} absolute left-4 top-1/2 -translate-y-1/2`}
+              >
+                ‹
+              </button>
+              <button
+                aria-label="Next image"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  stepLightbox(1);
+                }}
+                className={`${circleBtn} absolute right-4 top-1/2 -translate-y-1/2`}
+              >
+                ›
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>

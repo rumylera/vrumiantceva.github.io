@@ -10,22 +10,43 @@
   --color-teal: #1a4a3c;
   --color-surface: #132820;
   --color-border: rgba(240, 237, 230, 0.1);
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Work Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
 }
 
-html, body, #root {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
   background-color: #0d2720;
   color: #f0ede6;
-}
-
-* {
-  scrollbar-width: none;
-}
-*::-webkit-scrollbar {
-  display: none;
 }
 
 ::selection {
   background-color: #c46b3a;
   color: #f0ede6;
+}
+
+:focus-visible {
+  outline: 2px solid #d9834f;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
