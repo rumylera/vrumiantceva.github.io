@@ -94,7 +94,7 @@ const digital: Artwork[] = [
 const skillGroups: { label: string; items: string[] }[] = [
   { label: "Architecture", items: ["AutoCAD", "Revit", "SketchUp"] },
   { label: "Graphics", items: ["Adobe InDesign", "Procreate", "Figma"] },
-  { label: "Code & data", items: ["Python", "C++", "MATLAB", "MySQL", "HTML & CSS"] },
+  { label: "Code, data & AI", items: ["AI", "Python", "C++", "MATLAB", "SQL", "HTML & CSS"] },
 ];
 
 const languages: [string, string][] = [
@@ -124,19 +124,36 @@ const EMAIL = "rumylera@gmail.com";
 
 /* ── Small shared pieces ─────────────────────────────────────── */
 
-const label = "font-mono text-[0.62rem] tracking-[0.18em] uppercase text-copper";
+const label = "font-mono text-[0.7rem] tracking-[0.18em] uppercase text-copper";
 const sectionPad = "px-[clamp(1.5rem,6vw,4rem)] py-20 md:py-24";
 
 function SectionHeader({ title, note }: { title: string; note?: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-border pb-6">
+    <div className="flex flex-col gap-2 border-b border-border pb-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
       <h2 className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-normal">{title}</h2>
-      {note && <span className="font-mono text-[0.65rem] text-cream-dim text-right">{note}</span>}
+      {note && <span className="font-mono text-[0.72rem] text-cream-dim sm:text-right">{note}</span>}
     </div>
   );
 }
 
 type LightboxState = { images: string[]; index: number } | null;
+
+/** Horizontal swipe detection for touch screens. */
+function makeSwipe(onLeft: () => void, onRight: () => void) {
+  let startX = 0;
+  let startY = 0;
+  return {
+    onTouchStart: (e: React.TouchEvent) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) (dx < 0 ? onLeft : onRight)();
+    },
+  };
+}
 
 function ArtGrid({
   items,
@@ -169,12 +186,12 @@ function ArtGrid({
               className="block h-auto w-full opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
             />
             <span className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-bg/85 to-transparent to-55% p-4 opacity-0 transition-opacity group-hover:opacity-100">
-              <span className="font-mono text-[0.6rem] tracking-widest text-copper">{s.medium}</span>
+              <span className="font-mono text-[0.7rem] tracking-widest text-copper">{s.medium}</span>
             </span>
           </button>
           <figcaption className="mt-3 flex items-start justify-between gap-2">
             <span className="font-display text-[0.9rem] leading-snug">{s.caption}</span>
-            <span className="mt-0.5 shrink-0 font-mono text-[0.6rem] text-copper">{s.id}</span>
+            <span className="mt-0.5 shrink-0 font-mono text-[0.7rem] text-copper">{s.id}</span>
           </figcaption>
         </figure>
       ))}
@@ -190,6 +207,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<Record<string, number>>({});
   const [lightbox, setLightbox] = useState<LightboxState>(null);
+  const [showTop, setShowTop] = useState(false);
 
   const openLightbox = useCallback((images: string[], index: number) => setLightbox({ images, index }), []);
   const stepLightbox = useCallback((dir: 1 | -1) => {
@@ -212,6 +230,13 @@ export default function App() {
   }, [lightbox, stepLightbox]);
 
   useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = lightbox || menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -227,7 +252,7 @@ export default function App() {
   };
 
   const circleBtn =
-    "flex h-9 w-9 items-center justify-center rounded-full border border-border bg-bg/60 text-fg backdrop-blur-sm transition hover:bg-bg/90";
+    "flex h-11 w-11 items-center md:h-9 md:w-9 justify-center rounded-full border border-border bg-bg/60 text-fg backdrop-blur-sm transition hover:bg-bg/90";
 
   return (
     <div className="min-h-full w-full bg-bg font-body text-fg">
@@ -241,11 +266,11 @@ export default function App() {
       {/* ── NAV ── */}
       <nav
         aria-label="Main"
-        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border bg-bg/90 px-[clamp(1.5rem,6vw,2rem)] py-4 backdrop-blur-md"
+        className="absolute inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border bg-bg/40 px-[clamp(1.5rem,6vw,2rem)] py-4"
       >
         <button
           onClick={() => scrollTo("hero")}
-          className="font-mono text-[0.72rem] tracking-[0.2em] text-fg transition-opacity hover:opacity-60"
+          className="-my-3 py-3 font-mono text-[0.72rem] tracking-[0.2em] text-fg transition-opacity hover:opacity-60"
         >
           V. Rumiantceva
         </button>
@@ -255,7 +280,7 @@ export default function App() {
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-cream-dim transition-colors hover:text-fg"
+              className="font-mono text-[0.75rem] uppercase tracking-[0.18em] text-cream-dim transition-colors hover:text-fg"
             >
               {text}
             </button>
@@ -263,7 +288,7 @@ export default function App() {
         </div>
 
         <button
-          className="flex flex-col gap-[5px] p-2 md:hidden"
+          className="-mr-3 flex min-h-11 min-w-11 flex-col items-center justify-center gap-[5px] md:hidden"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
@@ -287,10 +312,16 @@ export default function App() {
         {/* ── HERO ── */}
         <section
           id="hero"
-          className="relative flex min-h-screen flex-col justify-end overflow-hidden px-[clamp(1.5rem,6vw,4rem)] pb-16 pt-28"
+          className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden px-[clamp(1.5rem,6vw,4rem)] pb-16 pt-28"
         >
           <div className="absolute inset-0 flex" aria-hidden="true">
-            <div className="w-full bg-bg md:w-1/2" />
+            <div className="relative w-full overflow-hidden bg-bg md:w-1/2">
+              <img
+                src="/ripafratta1.jpg"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover opacity-20 md:hidden"
+              />
+            </div>
             <div className="relative hidden bg-surface md:block md:w-1/2">
               <img
                 src="/ripafratta1.jpg"
@@ -302,7 +333,7 @@ export default function App() {
           </div>
 
           <div className="relative z-10 max-w-4xl">
-            <p className="mb-6 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-copper">
+            <p className="mb-6 font-mono text-[0.75rem] uppercase tracking-[0.22em] text-copper">
               Architecture · Portfolio 2026
             </p>
             <h1 className="mb-8 font-display text-[clamp(3.25rem,10vw,7.5rem)] font-normal leading-none">
@@ -318,23 +349,23 @@ export default function App() {
               BSc Architecture, Politechnika Gdańska (2026) · Erasmus+ at Universiteit Hasselt · now
               studying AI for Science and Technology at Milano-Bicocca.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="grid max-w-md grid-cols-2 gap-3 sm:flex sm:max-w-none sm:gap-4">
               <button
                 onClick={() => scrollTo("projects")}
-                className="bg-copper px-6 py-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-bg transition hover:bg-copper-light"
+                className="whitespace-nowrap bg-copper px-3 py-4 text-center font-mono text-[0.75rem] uppercase tracking-[0.1em] text-bg transition hover:bg-copper-light sm:px-6 sm:py-3 sm:tracking-[0.18em]"
               >
                 View projects
               </button>
               <a
                 href={`mailto:${EMAIL}?subject=Opportunity%20for%20Valeriia`}
-                className="border border-fg/30 px-6 py-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-fg transition hover:border-fg/70"
+                className="whitespace-nowrap border border-fg/30 px-3 py-4 text-center font-mono text-[0.75rem] uppercase tracking-[0.1em] text-fg transition hover:border-fg/70 sm:px-6 sm:py-3 sm:tracking-[0.18em]"
               >
                 Get in touch
               </a>
             </div>
           </div>
 
-          <div className="absolute bottom-8 right-8 hidden font-mono text-[0.65rem] tracking-[0.12em] text-cream-dim/60 md:block">
+          <div className="absolute bottom-8 right-8 hidden font-mono text-[0.72rem] tracking-[0.12em] text-cream-dim/60 md:block">
             Gdańsk, Poland · Open to internships &amp; junior roles
           </div>
         </section>
@@ -354,7 +385,7 @@ export default function App() {
                   aria-expanded={isOpen}
                   aria-controls={`project-${p.id}`}
                 >
-                  <span className="shrink-0 font-mono text-[0.68rem] text-copper">{p.id}</span>
+                  <span className="shrink-0 font-mono text-[0.75rem] text-copper">{p.id}</span>
                   <img
                     src={p.images[0]}
                     alt=""
@@ -372,8 +403,8 @@ export default function App() {
                       {p.summary}
                     </span>
                   </span>
-                  <span className="hidden font-mono text-[0.65rem] text-cream-dim lg:block">{p.type}</span>
-                  <span className="shrink-0 font-mono text-[0.65rem] text-cream-dim">{p.year}</span>
+                  <span className="hidden font-mono text-[0.72rem] text-cream-dim lg:block">{p.type}</span>
+                  <span className="shrink-0 font-mono text-[0.72rem] text-cream-dim">{p.year}</span>
                   <span
                     aria-hidden="true"
                     className={`inline-block shrink-0 text-cream-dim transition-transform ${isOpen ? "rotate-45" : ""}`}
@@ -384,12 +415,15 @@ export default function App() {
 
                 {isOpen && (
                   <div id={`project-${p.id}`} className="grid gap-8 pb-10 md:grid-cols-2">
-                    <div className="relative flex max-h-[65vh] items-center justify-center overflow-hidden bg-surface">
+                    <div
+                      className="relative flex max-h-[60svh] touch-pan-y items-center justify-center overflow-hidden bg-surface"
+                      {...makeSwipe(() => slide(p.id, p.images.length, 1), () => slide(p.id, p.images.length, -1))}
+                    >
                       <img
                         src={p.images[idx]}
                         alt={`${p.title}, image ${idx + 1} of ${p.images.length}`}
                         onClick={() => openLightbox(p.images, idx)}
-                        className="max-h-[65vh] w-full cursor-zoom-in object-contain"
+                        className="max-h-[60svh] w-full cursor-zoom-in object-contain"
                       />
                       {p.images.length > 1 && (
                         <>
@@ -407,7 +441,7 @@ export default function App() {
                           >
                             ›
                           </button>
-                          <span className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-bg/70 px-2 py-1 font-mono text-[0.6rem] text-fg">
+                          <span className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-bg/70 px-2 py-1 font-mono text-[0.7rem] text-fg">
                             {idx + 1} / {p.images.length}
                           </span>
                         </>
@@ -435,7 +469,7 @@ export default function App() {
                         {p.tags.map((t) => (
                           <li
                             key={t}
-                            className="border border-fg/15 px-3 py-1 font-mono text-[0.62rem] tracking-wide text-cream-dim"
+                            className="border border-fg/15 px-3 py-1 font-mono text-[0.7rem] tracking-wide text-cream-dim"
                           >
                             {t}
                           </li>
@@ -446,7 +480,7 @@ export default function App() {
                           href={p.pdfLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-fit font-mono text-[0.7rem] uppercase tracking-widest text-copper underline decoration-copper/40 underline-offset-[6px] transition hover:opacity-70"
+                          className="w-fit py-3 font-mono text-[0.7rem] uppercase tracking-widest text-copper underline decoration-copper/40 underline-offset-[6px] transition hover:opacity-70"
                         >
                           {p.pdfLabel ?? "Full document"} ↗
                         </a>
@@ -488,9 +522,9 @@ export default function App() {
                     <li key={school} className="flex justify-between gap-4">
                       <div>
                         <p className="text-[0.88rem]">{school}</p>
-                        <p className="mt-0.5 font-mono text-[0.62rem] text-cream-dim">{degree}</p>
+                        <p className="mt-0.5 font-mono text-[0.7rem] text-cream-dim">{degree}</p>
                       </div>
-                      <span className="shrink-0 font-mono text-[0.62rem] text-cream-dim">{years}</span>
+                      <span className="shrink-0 font-mono text-[0.7rem] text-cream-dim">{years}</span>
                     </li>
                   ))}
                 </ul>
@@ -503,12 +537,12 @@ export default function App() {
                 <div className="flex flex-col gap-5">
                   {skillGroups.map((g) => (
                     <div key={g.label}>
-                      <p className="mb-2 font-mono text-[0.62rem] text-cream-dim">{g.label}</p>
+                      <p className="mb-2 font-mono text-[0.7rem] text-cream-dim">{g.label}</p>
                       <ul className="flex flex-wrap gap-2">
                         {g.items.map((s) => (
                           <li
                             key={s}
-                            className="border border-fg/15 px-3 py-1 font-mono text-[0.68rem] tracking-wide text-fg"
+                            className="border border-fg/15 px-3 py-1 font-mono text-[0.75rem] tracking-wide text-fg"
                           >
                             {s}
                           </li>
@@ -525,11 +559,11 @@ export default function App() {
                   {languages.map(([lang, level]) => (
                     <li key={lang} className="flex items-baseline justify-between">
                       <span className="text-[0.88rem]">{lang}</span>
-                      <span className="font-mono text-[0.62rem] text-cream-dim">{level}</span>
+                      <span className="font-mono text-[0.7rem] text-cream-dim">{level}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 font-mono text-[0.62rem] leading-relaxed text-cream-dim">{basicLanguages}</p>
+                <p className="mt-3 font-mono text-[0.7rem] leading-relaxed text-cream-dim">{basicLanguages}</p>
               </div>
             </div>
           </div>
@@ -564,7 +598,7 @@ export default function App() {
                 <a
                   href="/Horror_Arch_Article_fixed.pdf"
                   download
-                  className="shrink-0 font-mono text-[0.65rem] uppercase tracking-widest text-cream-dim underline decoration-cream-dim/30 underline-offset-[6px] transition-colors hover:text-copper"
+                  className="shrink-0 font-mono text-[0.72rem] uppercase tracking-widest text-cream-dim underline decoration-cream-dim/30 underline-offset-[6px] transition-colors hover:text-copper"
                 >
                   ↓ Download PDF
                 </a>
@@ -593,7 +627,7 @@ export default function App() {
                 </p>
                 <a
                   href="/Horror_Arch_Article_fixed.pdf"
-                  className="bg-copper px-5 py-3 font-mono text-[0.68rem] uppercase tracking-widest text-bg"
+                  className="bg-copper px-5 py-3 font-mono text-[0.75rem] uppercase tracking-widest text-bg"
                 >
                   Open PDF
                 </a>
@@ -630,7 +664,7 @@ export default function App() {
               </p>
               <a
                 href={`mailto:${EMAIL}?subject=Opportunity%20for%20Valeriia`}
-                className="inline-block bg-copper px-7 py-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-bg transition hover:bg-copper-light"
+                className="block break-all bg-copper px-5 py-4 text-center font-mono sm:inline-block sm:px-7 text-[0.72rem] uppercase tracking-[0.18em] text-bg transition hover:bg-copper-light"
               >
                 {EMAIL}
               </a>
@@ -644,7 +678,7 @@ export default function App() {
                 ] as const
               ).map(([k, v]) => (
                 <div key={k} className="flex items-center justify-between border-b border-fg/[0.06] py-5">
-                  <dt className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-cream-dim">{k}</dt>
+                  <dt className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-cream-dim">{k}</dt>
                   <dd className="text-[0.88rem] font-light">{v}</dd>
                 </div>
               ))}
@@ -654,16 +688,28 @@ export default function App() {
       </main>
 
       <footer className="flex flex-col gap-3 border-t border-fg/[0.07] px-[clamp(1.5rem,6vw,4rem)] py-8 md:flex-row md:items-center md:justify-between">
-        <span className="font-mono text-[0.6rem] tracking-[0.12em] text-cream-dim/60">
+        <span className="font-mono text-[0.7rem] tracking-[0.12em] text-cream-dim/60">
           © 2026 Valeriia Rumiantceva
         </span>
         <button
           onClick={() => scrollTo("hero")}
-          className="w-fit font-mono text-[0.6rem] tracking-[0.12em] text-cream-dim/60 transition-colors hover:text-cream-dim"
+          className="w-fit py-3 font-mono text-[0.7rem] tracking-[0.12em] text-cream-dim/60 transition-colors hover:text-cream-dim"
         >
           ↑ Back to top
         </button>
       </footer>
+
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        tabIndex={showTop ? 0 : -1}
+        className={`fixed right-3 z-30 flex h-11 w-11 items-center justify-center rounded-full border border-fg/20 bg-bg/80 text-lg text-fg shadow-lg backdrop-blur-sm transition duration-300 hover:border-copper hover:text-copper bottom-[max(1.25rem,env(safe-area-inset-bottom))] ${
+          showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
+        }`}
+      >
+        <span aria-hidden="true">↑</span>
+      </button>
 
       {lightbox && (
         <div
@@ -671,6 +717,7 @@ export default function App() {
           aria-modal="true"
           aria-label="Image viewer"
           onClick={() => setLightbox(null)}
+          {...makeSwipe(() => stepLightbox(1), () => stepLightbox(-1))}
           className="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center bg-bg/95 p-6 md:p-10"
         >
           <img
@@ -682,7 +729,7 @@ export default function App() {
           <button
             aria-label="Close"
             onClick={() => setLightbox(null)}
-            className={`${circleBtn} absolute right-5 top-5 h-10 w-10 text-xl`}
+            className={`${circleBtn} absolute right-4 top-4 text-xl`}
           >
             ×
           </button>
