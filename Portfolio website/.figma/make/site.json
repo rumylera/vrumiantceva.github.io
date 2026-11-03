@@ -1,8 +1,8 @@
 {
-  "title": "Portfolio V. Rumiantceva",
-  "description": "Showcase creative work and projects in a professional portfolio to attract clients and employers with a visually engaging online presence.",
+  "title": "Valeriia Rumiantceva — Architecture Portfolio",
+  "description": "Architecture graduate (BSc, Politechnika Gdańska) specialising in adaptive reuse and cultural buildings. Projects in Italy, South Africa and Poland, plus research, sketchbook and digital work. Open to internships and junior roles.",
   "robots": {
-    "index": false
+    "index": true
   },
   "icons": {
     "icon": "/.figma/make/favicon.png"
