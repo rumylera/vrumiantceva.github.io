@@ -518,15 +518,25 @@ export default function App() {
               <div>
                 <p className={`${label} mb-4`}>Education</p>
                 <ul className="flex flex-col gap-4">
-                  {education.map(([school, degree, years]) => (
-                    <li key={school} className="flex justify-between gap-4">
-                      <div>
-                        <p className="text-[0.88rem]">{school}</p>
-                        <p className="mt-0.5 font-mono text-[0.7rem] text-cream-dim">{degree}</p>
-                      </div>
-                      <span className="shrink-0 font-mono text-[0.7rem] text-cream-dim">{years}</span>
-                    </li>
-                  ))}
+                  {education.map(([school, degree, years]) => {
+                    const [from, to] = years.split(" – ");
+                    return (
+                      <li key={school} className="flex items-baseline justify-between gap-4">
+                        <div className="min-w-0">
+                          <p className="text-[0.88rem] leading-snug">{school}</p>
+                          <p className="mt-0.5 font-mono text-[0.7rem] text-cream-dim">{degree}</p>
+                        </div>
+                        <span
+                          className="grid shrink-0 grid-cols-[4ch_2ch_4ch] whitespace-nowrap font-mono text-[0.7rem] leading-snug tabular-nums text-cream-dim"
+                          aria-label={years}
+                        >
+                          <span aria-hidden="true">{from}</span>
+                          <span aria-hidden="true" className="text-center">–</span>
+                          <span aria-hidden="true">{to}</span>
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
