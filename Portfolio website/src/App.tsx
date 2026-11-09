@@ -92,7 +92,7 @@ const digital: Artwork[] = [
 ];
 
 const skillGroups: { label: string; items: string[] }[] = [
-  { label: "Architecture", items: ["AutoCAD", "Revit", "SketchUp"] },
+  { label: "Architecture", items: ["AutoCAD", "Revit", "SketchUp", "Lumion", "D5"] },
   { label: "Graphics", items: ["Adobe InDesign", "Procreate", "Figma"] },
   { label: "Code, data & AI", items: ["AI", "Python", "C++", "MATLAB", "SQL", "HTML & CSS"] },
 ];
@@ -342,8 +342,7 @@ export default function App() {
               <em>Rumiantceva</em>
             </h1>
             <p className="mb-3 max-w-md font-display text-[clamp(1.2rem,2.4vw,1.6rem)] leading-snug">
-              Architecture graduate designing adaptive-reuse and cultural buildings, drawn by hand and
-              resolved in Revit.
+              Architecture graduate designing adaptive-reuse and concrete modular housing.
             </p>
             <p className="mb-10 max-w-md text-[0.95rem] font-light leading-relaxed text-cream-dim">
               BSc Architecture, Politechnika Gdańska (2026) · Erasmus+ at Universiteit Hasselt · now
