@@ -365,7 +365,7 @@ export default function App() {
           </div>
 
           <div className="absolute bottom-8 right-8 hidden font-mono text-[0.72rem] tracking-[0.12em] text-cream-dim/60 md:block">
-            Gdańsk, Poland · Open to internships &amp; junior roles
+            Gdańsk, Poland · Open to project jobs &amp; junior roles
           </div>
         </section>
 
@@ -669,7 +669,7 @@ export default function App() {
           <div className="grid gap-12 md:grid-cols-2 md:gap-20">
             <div>
               <p className="mb-8 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.2]">
-                Looking for an architecture internship or junior role. Let&rsquo;s talk.
+                Looking for project jobs or a junior role. Let&rsquo;s talk.
               </p>
               <a
                 href={`mailto:${EMAIL}?subject=Opportunity%20for%20Valeriia`}
